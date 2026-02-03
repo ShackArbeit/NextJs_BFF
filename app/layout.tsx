@@ -11,7 +11,6 @@ export default function RootLayout({
     <html lang="en">
       <body className="bg-zinc-950 text-zinc-100 antialiased">
         <div className="flex min-h-screen">
-          {/* Sidebar / Navbar */}
           <aside className="w-64 shrink-0 border-r border-zinc-800 bg-zinc-900">
             <div className="px-6 py-5 border-b border-zinc-800">
               <h1 className="text-lg font-semibold tracking-tight text-white">
@@ -35,7 +34,6 @@ export default function RootLayout({
             </nav>
           </aside>
 
-          {/* Main content */}
           <main className="flex-1 bg-zinc-950">
             {children}
           </main>

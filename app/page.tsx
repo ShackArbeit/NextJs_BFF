@@ -8,9 +8,9 @@ export default function HomePage() {
         </h2>
 
         <p className="mt-4 text-zinc-400 leading-relaxed">
-          This project is a hands-on demonstration of modern{' '}
+          本專案是針對現代{' '}
           <span className="text-zinc-200 font-medium">Next.js App Router</span>{' '}
-          capabilities, designed specifically for technical interviews.
+          功能的實作演示，專為技術面試而設計。
         </p>
 
         {/* Highlight box */}
@@ -19,12 +19,11 @@ export default function HomePage() {
             Architectural Positioning
           </h3>
           <p className="mt-2 text-sm text-zinc-400 leading-relaxed">
-            In this project, Next.js is intentionally used as a{' '}
+            在此專案中，Next.js 被刻意定位為{' '}
             <span className="text-zinc-200 font-medium">
               BFF (Backend for Frontend)
             </span>
-            . While Next.js supports both Node.js and Edge runtimes, large-scale
-            systems should still rely on independent backend services.
+            。雖然 Next.js 同時支援 Node.js 與 Edge 運行環境，但在大型系統架構中，仍應依賴獨立的後端服務。
           </p>
         </div>
 
@@ -52,26 +51,26 @@ export default function HomePage() {
 const FEATURES = [
   {
     title: 'Server Actions',
-    description: 'Compare form actions with traditional client-side fetch.',
+    description: '比較表單動作（Form Actions）與傳統用戶端 fetch 的差異。',
   },
   {
     title: 'Data Fetching & Caching',
-    description: 'Demonstrate fetch cache, revalidation, and data freshness.',
+    description: '展示 fetch 快取、重新驗證（Revalidation）以及資料即時性機制。',
   },
   {
     title: 'Streaming & Suspense',
-    description: 'Show partial rendering with dynamic HTML streaming.',
+    description: '透過動態 HTML 串流（Streaming）呈現部分渲染效果。',
   },
   {
     title: 'React Server Components',
-    description: 'Explain RSC boundaries and rendering responsibilities.',
+    description: '說明 RSC 邊界劃分以及渲染責任的分工。',
   },
   {
     title: 'Route Handlers',
-    description: 'REST-style APIs implemented in the App Router.',
+    description: '在 App Router 中實作 REST 風格的 API 介面。',
   },
   {
     title: 'Advanced Routing',
-    description: 'Nested layouts, route groups, and routing patterns.',
+    description: '包含巢狀佈局（Nested Layouts）、路由分組及多樣的路由模式。',
   },
 ]
