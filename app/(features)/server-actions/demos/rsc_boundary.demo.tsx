@@ -1,10 +1,13 @@
 import { prisma } from '@/src/lib/prisma'
+import type { Prisma } from '@prisma/client'
 import { DemoTab } from '../demo-tab'
 import CreateNoteForm from '../ui/CreateNoteForm'
 import CreateCommentForm from '../ui/CreateCommentForm'
 import NoteActions from '../ui/NoteActions'
 
-type NoteWithComments = Awaited<ReturnType<typeof prisma.demoNote.findMany>>[number]
+type NoteWithComments = Prisma.DemoNoteGetPayload<{
+  include: { comments: true }
+}>
 type Comment = NoteWithComments['comments'][number]
 
 
