@@ -98,7 +98,7 @@ export default function ArchitecturePage() {
       {/* Talking points */}
       <section className="rounded-xl border border-zinc-800 bg-zinc-900 p-6">
         <h3 className="text-sm font-semibold text-white">
-          Interview Talking Points (What to say)
+           Key Points
         </h3>
 
         <ul className="mt-4 space-y-2 text-sm text-zinc-300">
