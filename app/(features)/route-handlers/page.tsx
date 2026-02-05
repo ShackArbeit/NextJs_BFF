@@ -1,5 +1,6 @@
 // app/(features)/route-handlers/page.tsx
 import Link from "next/link";
+import { Suspense } from "react";
 
 import HttpMethods from "./demos/http_methods";
 import RequestNextRequest  from "./demos/request_nextrequest"
@@ -34,7 +35,19 @@ const tabs: { key: TabKey; label: string; desc: string }[] = [
   { key: "handler_vs_actions", label: "Handler vs Actions", desc: "REST API vs form mutation" },
 ];
 
-export default async function Page({
+export default function Page({
+  searchParams,
+}: {
+  searchParams: Promise<{ tab?: string }>;
+}) {
+  return (
+    <Suspense fallback={<PageFallback />}>
+      <PageContent searchParams={searchParams} />
+    </Suspense>
+  );
+}
+
+async function PageContent({
   searchParams,
 }: {
   searchParams: Promise<{ tab?: string }>;
@@ -99,6 +112,16 @@ export default async function Page({
           <Demo />
         </div>
       </main>
+    </div>
+  );
+}
+
+function PageFallback() {
+  return (
+    <div style={pageStyle}>
+      <div style={pillRow}>
+        <span style={pill}>Loading route handlers...</span>
+      </div>
     </div>
   );
 }
