@@ -28,34 +28,39 @@ export default function FetchInClientDemo() {
           setError(err.message)
           setLoading(false)
         })
-    }, 900)
+    }, 2000)
 
     return () => clearTimeout(timer)
   }, [])
 
   if (!hydrated) {
-    return <p className="text-amber-300">Hydrating client bundle...</p>
+    return <p className="text-xl text-amber-300 font-medium">正在 Client 端進行水合...</p>
   }
   if (loading) {
-    return <p className="animate-pulse text-amber-200">Loading in browser...</p>
+    return <p className="animate-pulse text-xl text-amber-200 font-medium">正在瀏覽器中載入...</p>
   }
-  if (error) return <p className="text-red-300">Error: {error}</p>
+  if (error) {
+    return <p className="text-xl text-red-400 font-bold">錯誤: {error}</p>
+  }
 
   return (
-    <div className="space-y-3">
-      <h2 className="mb-2 text-lg font-semibold text-amber-100">
-        Fetch in Client Component
+    <div className="space-y-4">
+      <h2 className="mb-2 text-2xl font-bold text-amber-100"> 
       </h2>
 
-      <p className="text-sm text-amber-200">
-        Fetch only starts after hydration + useEffect.
-      </p>
-      <p className="text-lg font-semibold text-amber-50">{data.title}</p>
-      <p className="text-xs text-amber-300">
-        Browser fetch window: {startedAt} - {finishedAt}
+      <p className="text-base text-amber-200 leading-relaxed"> 
+        資料獲取僅在水合（Hydration）完成且執行 useEffect 之後才開始
       </p>
 
-      <p className="mt-2 text-sm text-amber-200">
+      <p className="text-xl font-semibold text-amber-50"> 
+        {data.title}
+      </p>
+
+      <p className="text-sm text-amber-300"> 
+        瀏覽器端獲取數據的時間窗: {startedAt} - {finishedAt}
+      </p>
+
+      <p className="mt-4 text-base leading-relaxed text-amber-200"> 
         ✔ 使用 'use client'
         <br />
         ✔ useEffect / SWR / React Query

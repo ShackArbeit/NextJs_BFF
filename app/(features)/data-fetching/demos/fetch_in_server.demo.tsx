@@ -12,21 +12,25 @@ export default async function FetchInServerDemo() {
   const finishedAt = new Date()
 
   return (
-    <div className="space-y-3">
-      <h2 className="mb-2 text-lg font-semibold text-cyan-100">
-        Fetch in Server Component
+    <div className="space-y-4"> {/* 稍微增加間距讓畫面不擁擠 */}
+      <h2 className="mb-2 text-2xl font-bold text-cyan-100"> {/* 放大：lg -> 2xl */}
+        在 Server Component 中 fetch 資料
       </h2>
 
-      <p className="text-sm text-cyan-200">
-        Server starts fetching before client hydration.
+      <p className="text-base text-cyan-200"> {/* 放大：sm -> base */}
+         Server 在 Client 端進行『水合』（Hydration）之前就抓取數據
       </p>
-      <p className="mb-2 text-lg font-semibold text-cyan-50">{post.title}</p>
-      <p className="text-xs text-cyan-300">
-        Render window: {startedAt.toLocaleTimeString()} -{' '}
+      
+      <p className="mb-2 text-xl font-semibold text-cyan-50"> {/* 放大：lg -> xl */}
+        {post.title}
+      </p>
+      
+      <p className="text-sm text-cyan-300"> {/* 放大：xs -> sm */}
+        渲染視窗: {startedAt.toLocaleTimeString()} -{' '}
         {finishedAt.toLocaleTimeString()}
       </p>
 
-      <p className="text-sm text-cyan-200">
+      <p className="text-base leading-relaxed text-cyan-200"> {/* 放大：sm -> base */}
         ✔ 在 Server Component 中直接 fetch
         <br />
         ✔ 不需要 API Route

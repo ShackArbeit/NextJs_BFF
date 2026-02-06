@@ -33,7 +33,6 @@ async function DataFetchingContent({
 
   return (
     <>
-      {/* Tabs */}
       <nav className="flex gap-3 flex-wrap">
         {Object.keys(TABS).map((key) => (
           <Link
@@ -49,8 +48,6 @@ async function DataFetchingContent({
           </Link>
         ))}
       </nav>
-
-      {/* ✅ 關鍵：Suspense Boundary */}
       <section className="border rounded p-4">
         <Suspense fallback={<p>⏳ Loading demo...</p>}>
           <Demo />
