@@ -6,15 +6,15 @@ export default async function TagsRevalidateDemo() {
   const cart = await getCart()
 
   return (
-    <div>
+    <div style={{ color: '#fff' }}>
       <DemoHeader
-        title="cacheTag + updateTag（Update cart）"
-        description="示範快取資料如何在 mutation 後立即失效並重新產生。"
-        concepts={['use cache', 'cacheTag', 'updateTag', 'Server Actions']}
+        title="cacheTag + revalidateTag（更新快取）"
+        description="透過 mutation 讓 cache tag 失效並重新取得資料。"
+        concepts={['use cache', 'cacheTag', 'revalidateTag', 'Server Actions']}
         observe={[
-          '第一次進來是否很慢？',
-          '切走再回來是否變快且 generatedAt 不變？',
-          '點擊 Update 是否立刻看到新的 generatedAt？',
+          '第一次進入會看到 cached 內容',
+          '點 Update 後 generatedAt 會更新',
+          'Server Action 觸發 revalidate',
         ]}
       />
 

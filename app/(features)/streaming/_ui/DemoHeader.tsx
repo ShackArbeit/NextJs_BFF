@@ -1,9 +1,9 @@
 type DemoHeaderProps = {
   title: string
   description?: string
-  concepts?: string[]          
-  observe?: string[]          
-  warning?: string            
+  concepts?: string[]
+  observe?: string[]
+  warning?: string
 }
 
 export default function DemoHeader({
@@ -19,6 +19,7 @@ export default function DemoHeader({
         marginBottom: 16,
         paddingBottom: 12,
         borderBottom: '1px solid #333',
+        color: '#fff',
       }}
     >
       <h1 style={{ margin: 0 }}>{title}</h1>
@@ -61,9 +62,7 @@ export default function DemoHeader({
             lineHeight: 1.6,
           }}
         >
-          <div style={{ fontWeight: 700, marginBottom: 6 }}>
-            👀 觀察重點
-          </div>
+          <div style={{ fontWeight: 700, marginBottom: 6 }}>觀察重點</div>
           <ul style={{ paddingLeft: 18, margin: 0 }}>
             {observe.map((o, i) => (
               <li key={i}>{o}</li>
@@ -71,6 +70,7 @@ export default function DemoHeader({
           </ul>
         </div>
       )}
+
       {warning && (
         <div
           style={{
@@ -82,7 +82,7 @@ export default function DemoHeader({
             fontSize: 13,
           }}
         >
-          ⚠️ {warning}
+          注意：{warning}
         </div>
       )}
     </header>

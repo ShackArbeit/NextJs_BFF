@@ -13,15 +13,15 @@ export default async function AutoPrerenderDemo() {
   const computed = Array.from({ length: 8 }, (_, i) => (i + 1) * 7).map((n) => n * 2)
 
   return (
-    <div>
+    <div style={{ color: '#fff' }}>
       <DemoHeader
-        title="Auto Prerender（對照組）"
-        description="只使用同步 I/O 與純運算，Next.js 可在 build time 完成，直接進 Static Shell。"
+        title="Auto Prerender（自動預渲染）"
+        description="只有純計算與檔案讀取（無 request runtime data），Next.js 可在 build time 產生 Static Shell。"
         concepts={['prerendering', 'static shell']}
         observe={[
-          '頁面是否幾乎瞬間出現？',
-          '重新整理是否一樣快？',
-          '不需要 Suspense、不需要 use cache',
+          '重新整理或切換 tab，內容仍穩定',
+          '沒有 request-time 資料存取',
+          '未使用 Suspense 或 use cache',
         ]}
       />
 

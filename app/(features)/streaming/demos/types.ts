@@ -9,6 +9,7 @@ export type DemoItem = {
   key: DemoKey
   title: string
   description: string
-  // 使用 React.ReactElement 或 React.ReactNode 更加穩定
   Component: (props: { tab: DemoKey }) => Promise<React.ReactElement> | React.ReactElement
 }
+
+export type DemoMeta = Omit<DemoItem, 'Component'>

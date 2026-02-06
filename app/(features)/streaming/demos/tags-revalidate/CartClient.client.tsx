@@ -10,7 +10,7 @@ export default function CartClient() {
   const [msg, setMsg] = useState<string>('')
 
   return (
-    <div style={{ display: 'grid', gap: 10 }}>
+    <div style={{ display: 'grid', gap: 10, color: '#fff' }}>
       <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
         {[101, 102, 103].map((id) => (
           <button
@@ -20,8 +20,8 @@ export default function CartClient() {
               startTransition(async () => {
                 setMsg('Updating cart...')
                 const res = await updateCart(id)
-                setMsg(`✅ updatedItemId=${res.updatedItemId}, at=${res.at} (refreshing UI...)`)
-                // 讓 server component 重新抓資料（generatedAt 會更新）
+                setMsg(`Updated itemId=${res.updatedItemId}, at=${res.at} (refreshing UI...)`)
+                // Refresh server components to show updated generatedAt.
                 router.refresh()
               })
             }
@@ -40,7 +40,7 @@ export default function CartClient() {
       </div>
 
       <div style={{ fontSize: 12, opacity: 0.85 }}>
-        {msg || '點按鈕 → Server Action → updateTag(cart) → router.refresh() 立刻看到新 generatedAt'}
+        {msg || '點 Update 會觸發 Server Action（updateCart）與 router.refresh()，更新 generatedAt'}
       </div>
     </div>
   )

@@ -2,24 +2,24 @@
 
 import Link from 'next/link'
 import { useMemo, useState } from 'react'
-import type { DemoItem } from '../demos/types'
+import type { DemoMeta } from '../demos/types'
 
 export default function StreamingShell({
   demos,
   activeKey,
   children,
 }: {
-  demos: DemoItem[]
+  demos: DemoMeta[]
   activeKey: string
   children: React.ReactNode
 }) {
-  const [note, setNote] = useState('我是一段 client state（切 tab 不應該消失）')
+  const [note, setNote] = useState('這是 client state，切換 tab 不會消失')
   const [showTips, setShowTips] = useState(true)
 
   const items = useMemo(() => demos, [demos])
 
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: '320px 1fr', gap: 16 }}>
+    <div style={{ display: 'grid', gridTemplateColumns: '320px 1fr', gap: 16, color: '#fff' }}>
       <aside style={{ border: '1px solid #333', borderRadius: 12, padding: 16 }}>
         <h2 style={{ marginTop: 0 }}>Streaming / Cache Demos</h2>
 
@@ -28,26 +28,44 @@ export default function StreamingShell({
           <input
             value={note}
             onChange={(e) => setNote(e.target.value)}
-            style={{ width: '100%', padding: 8, borderRadius: 8, border: '1px solid #444', background: '#111', color: '#fff' }}
+            style={{
+              width: '100%',
+              padding: 8,
+              borderRadius: 8,
+              border: '1px solid #444',
+              background: '#111',
+              color: '#fff',
+            }}
           />
           <div style={{ marginTop: 8, fontSize: 12, opacity: 0.8 }}>
-            ✅ 切換 tab 後，如果這段文字還在，就代表 client state 被保留
+            可以觀察切換 tab 後，client state 仍保留
           </div>
         </div>
 
         <button
           onClick={() => setShowTips((v) => !v)}
-          style={{ width: '100%', padding: 10, borderRadius: 10, border: '1px solid #444', background: '#171717', color: '#fff', cursor: 'pointer' }}
+          style={{
+            width: '100%',
+            padding: 10,
+            borderRadius: 10,
+            border: '1px solid #444',
+            background: '#171717',
+            color: '#fff',
+            cursor: 'pointer',
+          }}
         >
           Toggle tips (client state)
         </button>
 
         {showTips && (
           <div style={{ marginTop: 10, fontSize: 12, opacity: 0.85, lineHeight: 1.5 }}>
-            🔎 觀察重點：<br />
-            1) 第一次進 use-cache 是否很慢？<br />
-            2) 再點回來是否變快？<br />
-            3) Suspense demo 是否先出 fallback？<br />
+            觀察重點
+            <br />
+            1) 先點 use-cache 觀察 cached 的時間
+            <br />
+            2) 切換到其他 tab 再回來，時間是否維持
+            <br />
+            3) Suspense demo 會先顯示 fallback
           </div>
         )}
 

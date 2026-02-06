@@ -1,21 +1,33 @@
 import { Suspense } from 'react'
 import StreamingShell from './_ui/StreamingShell.client'
-import { DEMOS, getDemo } from './demos/_registry'
+import { DEMOS_META, getDemoComponent, getDemoMeta } from './demos/_registry'
 
-export default async function Page({
+export default function Page({
+  searchParams,
+}: {
+  searchParams: Promise<{ tab?: string }>
+}) {
+  const fallbackKey = DEMOS_META[0]?.key ?? ''
+
+  return (
+    <Suspense fallback={<StreamingShell demos={DEMOS_META} activeKey={fallbackKey} />}>
+      <PageContent searchParams={searchParams} />
+    </Suspense>
+  )
+}
+
+async function PageContent({
   searchParams,
 }: {
   searchParams: Promise<{ tab?: string }>
 }) {
   const sp = await searchParams
-  const demo = getDemo(sp.tab)
+  const demo = getDemoMeta(sp.tab)
+  const DemoComponent = getDemoComponent(demo.key)
 
   return (
-    <StreamingShell demos={DEMOS} activeKey={demo.key}>
-      {/* 這層 Suspense 是「保險」：讓你 demo 內部也能自由再切更細的 Suspense */}
-      <Suspense fallback={<p>Loading demo shell...</p>}>
-        <demo.Component tab={demo.key} />
-      </Suspense>
+    <StreamingShell demos={DEMOS_META} activeKey={demo.key}>
+      <DemoComponent tab={demo.key} />
     </StreamingShell>
   )
 }

@@ -32,24 +32,24 @@ async function SlowTodos() {
 
 export default async function SuspenseStreamDemo() {
   return (
-    <div>
+    <div style={{ color: '#fff' }}>
       <DemoHeader
-        title="Suspense Streaming（先出 fallback，再串流內容）"
-        description="把無法在 prerender 完成的工作延後到 request time：fallback 先進 Static Shell，真正內容稍後串流進來。"
+        title="Suspense Streaming（串流 + fallback）"
+        description="先渲染 static shell，再在 request time 串流內容。"
         concepts={['Suspense', 'fallback UI', 'request-time streaming']}
         observe={[
-          '進入此 tab 時，是否會先看到 fallback？',
-          '等待 1~2 秒後，內容是否才出現？',
-          '重複切換回來是否每次都會 fallback（因為 cache: no-store）？',
+          '切換 tab 會先看到 fallback',
+          '約 1~2 秒後資料載入',
+          "這個 demo 使用 cache: 'no-store'",
         ]}
       />
 
-      <Suspense fallback={<p>⏳ Loading todos...（這段會先進 Static Shell）</p>}>
+      <Suspense fallback={<p>Loading todos...（streaming）</p>}>
         <SlowTodos />
       </Suspense>
 
       <div style={{ marginTop: 12, fontSize: 12, opacity: 0.75 }}>
-        Tip：這裡刻意使用 <code>cache: 'no-store'</code> + <code>sleep()</code>，讓你每次都能明顯看到 Streaming 行為。
+        提示：這裡用 <code>cache: 'no-store'</code> + <code>sleep()</code> 模擬 request-time streaming
       </div>
     </div>
   )

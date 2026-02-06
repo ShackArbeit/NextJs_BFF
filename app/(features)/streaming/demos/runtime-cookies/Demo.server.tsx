@@ -50,21 +50,21 @@ async function CachedBlock() {
 
 export default async function RuntimeCookiesDemo() {
   return (
-    <div>
+    <div style={{ color: '#fff' }}>
       <DemoHeader
         title="Runtime Data（cookies）"
-        description="示範 runtime data 必須在 request time 才能取得，且一定要搭配 Suspense。"
+        description="cookies() 是 runtime data，必須在 request time 取得，需配合 Suspense。"
         concepts={['cookies()', 'runtime data', 'Suspense']}
         observe={[
-          '是否先看到 fallback，再看到 cookies 內容？',
-          'generatedAt 是否每次刷新都不同？',
-          'runtime 區塊與 cached 區塊是否行為不同？',
+          '先看到 fallback，稍後才讀到 cookies',
+          'generatedAt 每次 request 都會變',
+          'runtime 與 cached 區塊更新頻率不同',
         ]}
-        warning="runtime data 無法與 use cache 在同一個 scope 使用。"
+        warning="runtime data 不能在 use cache 區塊中使用"
       />
 
       <h3>A) Runtime panel</h3>
-      <Suspense fallback={<p>⏳ Loading runtime cookies...</p>}>
+      <Suspense fallback={<p>Loading runtime cookies...</p>}>
         <RuntimePanel />
       </Suspense>
 
