@@ -76,7 +76,7 @@ async function PageContent(props: {
       <header style={{ maxWidth: 1100, margin: "0 auto 18px" }}>
         <div style={{ display: "flex", alignItems: "baseline", gap: 10 }}>
           <h1 style={{ fontSize: 28, fontWeight: 800, margin: 0 }}>
-            RSC vs Client
+            React Server Component vs Client Component
           </h1>
           <span
             style={{
@@ -104,7 +104,6 @@ async function PageContent(props: {
           gap: 14,
         }}
       >
-        {/* Left: Tabs */}
         <aside
           style={{
             borderRadius: 16,
@@ -188,8 +187,6 @@ async function PageContent(props: {
             searchParams、也可以做 server-side rendering 與 streaming。
           </div>
         </aside>
-
-        {/* Right: Demo */}
         <section
           style={{
             borderRadius: 16,

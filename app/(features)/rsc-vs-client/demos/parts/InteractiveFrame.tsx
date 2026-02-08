@@ -14,37 +14,43 @@ export default function InteractiveFrame(props: {
         borderRadius: 16,
         border: "1px solid rgba(255,255,255,0.12)",
         background: "rgba(255,255,255,0.03)",
-        padding: 14,
+        padding: 18, 
         display: "grid",
-        gap: 12,
+        gap: 16, 
       }}
     >
       <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-        <div style={{ fontWeight: 900 }}>{props.title}</div>
+        <div style={{ fontWeight: 900, fontSize: 16 }}>{props.title}</div>
+        
         <button
           onClick={() => setOn((v) => !v)}
           style={{
             marginLeft: "auto",
-            padding: "8px 10px",
+            padding: "10px 14px",
             borderRadius: 12,
             border: "1px solid rgba(255,255,255,0.16)",
-            background: on ? "rgba(99,102,241,0.20)" : "rgba(0,0,0,0.18)",
+            background: on ? "rgba(99,102,241,0.30)" : "rgba(0,0,0,0.18)",
             color: "rgba(255,255,255,0.9)",
             cursor: "pointer",
             fontWeight: 800,
-            fontSize: 12,
+            fontSize: 14, 
+            transition: "all 0.2s ease",
           }}
         >
           {on ? "Hide slot" : "Show slot"}
         </button>
       </div>
 
-      <div style={{ opacity: 0.7, fontSize: 12, lineHeight: 1.6 }}>
-        ✅ 這個 frame 是 Client Component，所以可以用 state / click。  
-        Slot 內容是 Server 先渲染好後傳進來的 UI。
+      <div style={{ opacity: 0.7, fontSize: 14, lineHeight: 1.7 }}>
+        ✅ 這個 frame 是 <b>Client Component</b>，所以可以使用 <code>useState</code> 與事件監聽。
+        內部的 Slot 內容則是 Server 先渲染好後傳進來的 UI。
       </div>
-
-      {on ? props.children : null}
+      <div style={{ 
+        marginTop: 4, 
+        display: on ? "block" : "none" 
+      }}>
+        {props.children}
+      </div>
     </div>
   );
 }
