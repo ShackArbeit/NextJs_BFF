@@ -6,7 +6,7 @@ export default function HeadersCookiesDemo() {
   const [result, setResult] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
 
-  const run = async () => {
+  const fetchData = async () => {
     try {
       setError(null);
       setResult(null);
@@ -19,51 +19,51 @@ export default function HeadersCookiesDemo() {
     }
   };
 
+  const deleteCookie = async () => {
+    try {
+      setError(null);
+      setResult(null);
+      const res = await fetch("/api/headers-cookies", {
+        method: "DELETE",
+      });
+      const json = await res.json();
+      setResult({ status: res.status, json });
+    } catch (e: any) {
+      setError(e?.message ?? "unknown error");
+    }
+  };
+
   useEffect(() => {
-    run();
+    fetchData();
   }, []);
 
   return (
-    <section style={card}>
-      <h2 style={h2}>Headers / Cookies Demo</h2>
-
-      <div style={{ display: "flex", gap: 10, marginTop: 12, flexWrap: "wrap" }}>
-        <button style={btnPrimary} onClick={run}>
+    <section className="rounded-2xl border border-zinc-700 bg-zinc-950 p-6 text-zinc-100">
+      <h2 className="text-xl font-extrabold tracking-wide">Headers / Cookies Demo</h2>
+      <div className="mt-4 flex flex-wrap items-center gap-3">
+        <button
+          onClick={fetchData}
+          className="rounded-xl border border-zinc-700 bg-white px-4 py-2 text-base font-extrabold text-zinc-900 hover:bg-zinc-200"
+        >
           Re-fetch /api/headers-cookies
         </button>
-        <span style={{ color: "#bbb", fontSize: 13 }}>
-          連點幾次，看 cookie rh_count 會一直 +1 ✅
+
+        <button
+          onClick={deleteCookie}
+          className="rounded-xl border border-red-700 bg-zinc-900 px-4 py-2 text-base font-extrabold text-red-400 hover:bg-zinc-800"
+        >
+          Delete rh_count cookie
+        </button>
+        <span className="text-sm text-zinc-400">
+          每次取得資料都會讀取 <code className="mx-1 rounded bg-black px-1">rh_count</code> 並將其加 1
         </span>
       </div>
-
-      {error && <p style={{ marginTop: 12 }}>❌ {error}</p>}
-      <pre style={pre}>{JSON.stringify(result, null, 2)}</pre>
+      {error && (
+        <p className="mt-4 text-base text-red-400">Error: {error}</p>
+      )}
+      <pre className="mt-4 rounded-xl border border-zinc-800 bg-zinc-900 p-4 text-sm leading-relaxed text-zinc-200">
+        {result ? JSON.stringify(result, null, 2) : "Waiting for response..."}
+      </pre>
     </section>
   );
 }
-
-const card: React.CSSProperties = {
-  border: "1px solid #333",
-  borderRadius: 14,
-  padding: 16,
-  background: "#0b0b0b",
-  color: "#fff",
-};
-const h2: React.CSSProperties = { fontSize: 18, fontWeight: 900 };
-const btnPrimary: React.CSSProperties = {
-  padding: "10px 12px",
-  borderRadius: 10,
-  border: "1px solid #333",
-  background: "#fff",
-  color: "#111",
-  fontWeight: 900,
-  cursor: "pointer",
-};
-const pre: React.CSSProperties = {
-  marginTop: 12,
-  whiteSpace: "pre-wrap",
-  padding: 12,
-  borderRadius: 12,
-  background: "#111",
-  border: "1px solid #222",
-};

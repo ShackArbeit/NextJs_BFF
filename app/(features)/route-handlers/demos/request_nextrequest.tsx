@@ -17,7 +17,7 @@ export default function RequestNextRequestDemo() {
       setResult(null);
 
       const res = await fetch(
-        "/api/request-vs-nextrequest?foo=bar&count=1"
+         "/api/request-vs-nextrequest?Country=Taiwan&City=Taipei"
       );
       const json = await res.json();
 
@@ -35,45 +35,96 @@ export default function RequestNextRequestDemo() {
   }, []);
 
   return (
-    <section style={card}>
-      <h2 style={h2}>Request vs NextRequest Demo</h2>
-
-      <p style={desc}>
+    <section className="rounded-2xl border border-zinc-700 bg-zinc-950 p-6 text-zinc-100">
+      <h2 className="text-xl font-extrabold tracking-wide">
+        Request vs NextRequest Demo
+      </h2>
+      <p className="mt-3 text-base leading-relaxed text-zinc-300">
         這個 demo 會呼叫
-        <code style={code}>/api/request-vs-nextrequest?foo=bar&count=1</code>
-        ，讓你觀察在 <strong>Route Handler</strong> 中使用
-        <strong>Request</strong> 時可以取得哪些資訊。
+        <code className="mx-1 rounded-md border border-zinc-700 bg-zinc-900 px-2 py-0.5 text-sm">
+          /api/request-vs-nextrequest?Country=Taiwan&City=Taipei
+        </code>
+        ，讓你實際觀察在 <strong>Route Handler</strong> 中使用
+        <strong className="text-white"> Web 標準 Request</strong>
+        時，可以取得哪些資訊，以及它的限制。
       </p>
-
-      <div style={{ display: "flex", gap: 10, marginTop: 12 }}>
-        <button style={btnPrimary} onClick={run}>
+      <div className="mt-4 flex gap-3">
+        <button
+          onClick={run}
+          className="rounded-xl border border-zinc-700 bg-white px-4 py-2 text-sm font-extrabold text-zinc-900 transition hover:bg-zinc-200"
+        >
           Re-fetch API
         </button>
       </div>
+      {error && (
+        <p className="mt-4 text-sm text-red-400">
+          ❌ {error}
+        </p>
+      )}
+      <pre className="mt-4 rounded-xl border border-zinc-800 bg-zinc-900 p-4 text-sm leading-relaxed">
+        {JSON.stringify(result, null, 2)}
+      </pre>
+      <div className="mt-6 rounded-xl border border-zinc-700 bg-zinc-900 p-4">
+        <h3 className="text-base font-bold text-white">
+          🔍 Request vs NextRequest — 核心差異
+        </h3>
 
-      {error && <p style={{ marginTop: 12 }}>❌ {error}</p>}
-
-      <pre style={pre}>{JSON.stringify(result, null, 2)}</pre>
-
-      <div style={noteBox}>
-        <strong>重點對照：</strong>
-        <ul style={{ marginTop: 8, paddingLeft: 18 }}>
+        <ul className="mt-3 space-y-2 pl-5 text-sm leading-relaxed text-zinc-300 list-disc">
           <li>
-            <code style={codeInline}>Request</code>：你需要自己
-            <code style={codeInline}>new URL(req.url)</code> 來解析
-            <code style={codeInline}>searchParams</code>
+            <code className="rounded-md bg-black px-1.5 py-0.5">
+              Request
+            </code>
+            ：
+            <span className="text-zinc-200">
+              標準 Web API，僅提供
+              <code className="mx-1 rounded-md bg-black px-1.5 py-0.5">
+                url
+              </code>
+             、
+              <code className="mx-1 rounded-md bg-black px-1.5 py-0.5">
+                headers
+              </code>
+              等基本資訊  
+              👉 你必須自己
+              <code className="mx-1 rounded-md bg-black px-1.5 py-0.5">
+                new URL(req.url)
+              </code>
+              才能解析 query
+            </span>
           </li>
+
           <li>
-            <code style={codeInline}>NextRequest</code>：可以直接用
-            <code style={codeInline}>req.nextUrl</code>、
-            <code style={codeInline}>req.cookies</code>、
-            <code style={codeInline}>req.geo</code>
+            <code className="rounded-md bg-black px-1.5 py-0.5">
+              NextRequest
+            </code>
+            ：
+            <span className="text-zinc-200">
+              Next.js 擴充版 Request，內建
+              <code className="mx-1 rounded-md bg-black px-1.5 py-0.5">
+                req.nextUrl
+              </code>
+             、
+              <code className="mx-1 rounded-md bg-black px-1.5 py-0.5">
+                req.cookies
+              </code>
+             、
+              <code className="mx-1 rounded-md bg-black px-1.5 py-0.5">
+                req.geo
+              </code>
+              等 Server-only 能力
+            </span>
           </li>
-          <li>
-            在 Route Handlers 中：
-            <ul style={{ marginTop: 6 }}>
-              <li>✔ 簡單情境 → 用標準 Web <strong>Request</strong></li>
-              <li>✔ Next.js 專屬能力 → 改用 <strong>NextRequest</strong></li>
+
+          <li className="pt-2">
+            ✅ 在 <strong>Route Handlers</strong> 中的選擇建議：
+            <ul className="mt-2 list-inside list-disc text-zinc-400">
+              <li>
+                純 API / 標準 HTTP 行為 → 使用 <strong>Request</strong>
+              </li>
+              <li>
+                需要 cookies / middleware / edge 能力 →
+                <strong className="text-white"> NextRequest</strong>
+              </li>
             </ul>
           </li>
         </ul>
@@ -81,72 +132,3 @@ export default function RequestNextRequestDemo() {
     </section>
   );
 }
-
-/* ---------- styles ---------- */
-
-const card: React.CSSProperties = {
-  border: "1px solid #333",
-  borderRadius: 14,
-  padding: 16,
-  background: "#0b0b0b",
-  color: "#fff",
-};
-
-const h2: React.CSSProperties = {
-  fontSize: 18,
-  fontWeight: 900,
-};
-
-const desc: React.CSSProperties = {
-  marginTop: 8,
-  fontSize: 14,
-  color: "#cfcfcf",
-  lineHeight: 1.6,
-};
-
-const pre: React.CSSProperties = {
-  marginTop: 12,
-  whiteSpace: "pre-wrap",
-  padding: 12,
-  borderRadius: 12,
-  background: "#111",
-  border: "1px solid #222",
-};
-
-const btnPrimary: React.CSSProperties = {
-  padding: "10px 12px",
-  borderRadius: 10,
-  border: "1px solid #333",
-  background: "#fff",
-  color: "#111",
-  fontWeight: 900,
-  cursor: "pointer",
-};
-
-const noteBox: React.CSSProperties = {
-  marginTop: 14,
-  padding: 12,
-  borderRadius: 12,
-  background: "#0f0f10",
-  border: "1px solid #2a2a2a",
-  fontSize: 14,
-  color: "#ddd",
-};
-
-const code: React.CSSProperties = {
-  margin: "0 4px",
-  padding: "2px 6px",
-  borderRadius: 6,
-  background: "#111",
-  border: "1px solid #333",
-  fontSize: 13,
-};
-
-const codeInline: React.CSSProperties = {
-  margin: "0 4px",
-  padding: "2px 6px",
-  borderRadius: 6,
-  background: "#111",
-  border: "1px solid #333",
-  fontSize: 12,
-};

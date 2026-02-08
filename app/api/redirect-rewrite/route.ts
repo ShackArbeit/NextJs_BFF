@@ -1,13 +1,12 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-
-export async function GET(req: Request) {
-  const url = new URL(req.url);
-  const mode = url.searchParams.get("mode") ?? "redirect";
+export async function GET(req: NextRequest) {
+  const mode = req.nextUrl.searchParams.get("mode") ?? "redirect";
 
   if (mode === "redirect") {
-    // 302 redirect 到 feature page（你可以改 tab）
-    return NextResponse.redirect(new URL("/router-handlers?tab=http_methods", req.url));
+    return NextResponse.redirect(
+      new URL("/route-handlers?tab=http_methods", req.nextUrl)
+    );
   }
 
   return NextResponse.json({

@@ -1,14 +1,10 @@
 import { NextResponse } from "next/server";
 import { cookies, headers } from "next/headers";
 
-
-
 export async function GET() {
-
   const h = await headers();
   const c = await cookies();
 
- 
   const current = Number(c.get("rh_count")?.value ?? "0");
   const nextCount = current + 1;
 
@@ -25,6 +21,23 @@ export async function GET() {
     path: "/",
     httpOnly: false,
     sameSite: "lax",
+  });
+
+  return res;
+}
+
+export async function DELETE() {
+  const res = NextResponse.json({
+    ok: true,
+    concept: "delete cookie",
+    deleted: "rh_count",
+    tip: "透過設定 Max-Age=0 讓 cookie 立即過期",
+    ts: new Date().toISOString(),
+  });
+
+  res.cookies.set("rh_count", "", {
+    path: "/",
+    maxAge: 0, 
   });
 
   return res;

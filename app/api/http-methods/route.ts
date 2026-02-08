@@ -20,19 +20,18 @@ export async function POST() {
 }
 
 export async function PUT() {
-  return NextResponse.json({ ok: true, method: "PUT" });
+  return NextResponse.json({ ok: true, method: "PUT",ts: new Date().toISOString(), });
 }
 
 export async function PATCH() {
-  return NextResponse.json({ ok: true, method: "PATCH" });
+  return NextResponse.json({ ok: true, method: "PATCH" ,ts: new Date().toISOString(),});
 }
 
 export async function DELETE() {
-  return NextResponse.json({ ok: true, method: "DELETE" });
+  return NextResponse.json({ ok: true, method: "DELETE" ,ts: new Date().toISOString(),});
 }
 
 export async function OPTIONS() {
-  // 簡易 CORS 示範（正式環境請搭配 Middleware / 反向代理）
   return new NextResponse(null, {
     status: 204,
     headers: {

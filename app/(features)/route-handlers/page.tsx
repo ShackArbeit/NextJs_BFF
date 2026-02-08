@@ -1,4 +1,3 @@
-// app/(features)/route-handlers/page.tsx
 import Link from "next/link";
 import { Suspense } from "react";
 
@@ -64,10 +63,10 @@ async function PageContent({
     <div style={pageStyle}>
       <header style={{ display: "grid", gap: 8 }}>
         <h1 style={{ fontSize: 28, fontWeight: 950, margin: 0 }}>
-          Route Handlers Playground
+          Route Handlers 展示
         </h1>
         <p style={{ margin: 0, color: "#b8b8b8" }}>
-          點 tab 切換 demos；每個 demo 都會去呼叫對應的 <code style={codePill}>app/api</code>{" "}
+          每個 demo 都會去呼叫對應的 <code style={codePill}>app/api</code>{" "}
           Route Handler 🧪
         </p>
       </header>
@@ -90,9 +89,9 @@ async function PageContent({
               <div style={{ fontSize: 12, opacity: active ? 0.7 : 0.75, marginTop: 4 }}>
                 {t.desc}
               </div>
-              <div style={{ fontSize: 12, marginTop: 8, opacity: active ? 0.7 : 0.6 }}>
+              {/* <div style={{ fontSize: 12, marginTop: 8, opacity: active ? 0.7 : 0.6 }}>
                 tab=<span style={{ fontFamily: "monospace" }}>{t.key}</span>
-              </div>
+              </div> */}
             </Link>
           );
         })}
