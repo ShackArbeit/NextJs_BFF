@@ -24,7 +24,7 @@ const demoMap = {
 type TabKey = keyof typeof demoMap;
 
 const tabs: { key: TabKey; label: string; desc: string }[] = [
-  { key: "http_methods", label: "HTTP Methods", desc: "GET/POST/PUT/PATCH/DELETE/OPTIONS/HEAD" },
+  { key: "http_methods", label: "HTTP Methods", desc: "All of Http methods" },
   { key: "request_nextrequest", label: "Request vs NextRequest", desc: "req.url + searchParams" },
   { key: "dynamic_params", label: "Dynamic Params", desc: "app/api/.../[id] → params.id" },
   { key: "caching", label: "Caching", desc: "revalidate + upstream fetch cache" },

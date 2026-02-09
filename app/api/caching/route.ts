@@ -1,21 +1,24 @@
 import { NextResponse } from "next/server";
-
-
-export const revalidate = 10;
+import { headers } from "next/headers";
 
 export async function GET() {
- 
-  const upstream = await fetch("https://jsonplaceholder.typicode.com/todos/1", {
-    next: { revalidate: 10},
+  const host = (await headers()).get("host");
+  const proto = process.env.NODE_ENV === "development" ? "http" : "https";
+  const baseUrl = `${proto}://${host}`;
+
+  const upstreamRes = await fetch(`${baseUrl}/api/upstream`, {
+    next: { revalidate: 10 },
   });
-  const upstreamJson = await upstream.json();
+
+  const upstreamJson = await upstreamRes.json();
 
   return NextResponse.json({
     ok: true,
-    concept: "Caching",
+    concept: "Caching upstream fetch only",
     revalidateSeconds: 10,
+
     upstream: upstreamJson,
+
     ts: new Date().toISOString(),
-    tip: "你一直刷新頁面時，ts 可能在 10 秒內不變（視環境/部署而定）。",
   });
 }
