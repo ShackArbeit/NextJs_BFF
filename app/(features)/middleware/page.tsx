@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Suspense } from "react";
 import TabNav from "./components/TabNav";
 import DemoShell from "./components/DemoShell";
 import RenameToProxyDemo from "./demos/Renam_to_Proxy";
@@ -56,7 +57,32 @@ export default async function MiddlewareFeaturePage({
               ]}
               routeExample="/middleware?tab=proxy"
             >
-              <RenameToProxyDemo />
+              <Suspense
+                fallback={
+                  <div className="grid gap-4 md:grid-cols-2">
+                    {Array.from({ length: 6 }).map((_, i) => (
+                      <div
+                        key={`proxy-skeleton-${i}`}
+                        className="animate-pulse rounded-2xl border border-zinc-800 bg-zinc-950 p-5"
+                      >
+                        <div className="flex items-center justify-between gap-3">
+                          <div className="h-3 w-40 rounded bg-zinc-800" />
+                          <div className="h-5 w-28 rounded-full bg-zinc-800" />
+                        </div>
+                        <div className="mt-4 h-6 w-3/4 rounded bg-zinc-800" />
+                        <div className="mt-3 space-y-2">
+                          <div className="h-3 w-full rounded bg-zinc-800" />
+                          <div className="h-3 w-11/12 rounded bg-zinc-800" />
+                          <div className="h-3 w-10/12 rounded bg-zinc-800" />
+                        </div>
+                        <div className="mt-4 h-3 w-36 rounded bg-zinc-800" />
+                      </div>
+                    ))}
+                  </div>
+                }
+              >
+                <RenameToProxyDemo />
+              </Suspense>
             </DemoShell>
           ) : (
             <DemoShell
