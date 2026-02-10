@@ -14,75 +14,45 @@ export default function DemoHeader({
   warning,
 }: DemoHeaderProps) {
   return (
-    <header
-      style={{
-        marginBottom: 16,
-        paddingBottom: 12,
-        borderBottom: '1px solid #333',
-        color: '#fff',
-      }}
-    >
-      <h1 style={{ margin: 0 }}>{title}</h1>
+    <header className="mb-4 border-bottom border-neutral-800 pb-3 text-white">
+      <h1 className="m-0 text-2xl font-bold tracking-tight">{title}</h1>
 
       {description && (
-        <p style={{ marginTop: 6, opacity: 0.85, lineHeight: 1.6 }}>
+        <p className="mt-1.5 text-sm leading-relaxed opacity-85">
           {description}
         </p>
       )}
-
       {concepts.length > 0 && (
-        <div style={{ marginTop: 10, display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+        <div className="mt-2.5 flex flex-wrap gap-2">
           {concepts.map((c) => (
             <span
               key={c}
-              style={{
-                fontSize: 12,
-                padding: '4px 10px',
-                borderRadius: 999,
-                border: '1px solid #444',
-                background: '#111',
-                opacity: 0.9,
-              }}
+              className="rounded-full border border-neutral-700 bg-neutral-900 px-2.5 py-1 text-xs opacity-90 transition-hover hover:border-neutral-500"
             >
               {c}
             </span>
           ))}
         </div>
       )}
-
       {observe.length > 0 && (
-        <div
-          style={{
-            marginTop: 12,
-            padding: 12,
-            borderRadius: 10,
-            border: '1px dashed #444',
-            background: '#0f0f0f',
-            fontSize: 13,
-            lineHeight: 1.6,
-          }}
-        >
-          <div style={{ fontWeight: 700, marginBottom: 6 }}>觀察重點</div>
-          <ul style={{ paddingLeft: 18, margin: 0 }}>
+        <div className="mt-3 rounded-xl border border-dashed border-neutral-700 bg-neutral-950 p-3 text-[13px] leading-relaxed">
+          <div className="mb-1.5 font-bold text-neutral-200 flex items-center gap-2">
+            <span className="inline-block w-1.5 h-1.5 rounded-full bg-blue-500" />
+            觀察重點
+          </div>
+          <ul className="m-0 list-inside list-disc space-y-1 pl-1 text-neutral-400">
             {observe.map((o, i) => (
-              <li key={i}>{o}</li>
+              <li key={i} className="pl-1">
+                <span className="text-neutral-300">{o}</span>
+              </li>
             ))}
           </ul>
         </div>
       )}
-
       {warning && (
-        <div
-          style={{
-            marginTop: 12,
-            padding: 12,
-            borderRadius: 10,
-            border: '1px solid #553',
-            background: '#16110a',
-            fontSize: 13,
-          }}
-        >
-          注意：{warning}
+        <div className="mt-3 rounded-xl border border-amber-900/50 bg-amber-950/20 p-3 text-[13px] text-amber-200/90">
+          <span className="font-bold text-amber-500">注意：</span>
+          {warning}
         </div>
       )}
     </header>

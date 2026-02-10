@@ -7,13 +7,14 @@ export default async function AutoPrerenderDemo() {
   const raw = fs.readFileSync(filePath, 'utf-8')
 
   const pkg = JSON.parse(raw)
+  console.log('PKG:',pkg)
   const depsCount = pkg?.dependencies ? Object.keys(pkg.dependencies).length : 0
   const devDepsCount = pkg?.devDependencies ? Object.keys(pkg.devDependencies).length : 0
 
   const computed = Array.from({ length: 8 }, (_, i) => (i + 1) * 7).map((n) => n * 2)
 
   return (
-    <div style={{ color: '#fff' }}>
+    <div className="text-white">
       <DemoHeader
         title="Auto Prerender（自動預渲染）"
         description="只有純計算與檔案讀取（無 request runtime data），Next.js 可在 build time 產生 Static Shell。"
@@ -24,31 +25,29 @@ export default async function AutoPrerenderDemo() {
           '未使用 Suspense 或 use cache',
         ]}
       />
-
-      <div style={{ padding: 12, border: '1px solid #333', borderRadius: 10, marginBottom: 12 }}>
-        <div>
-          <b>package.json name:</b> {pkg?.name ?? '(unknown)'}
-        </div>
-        <div>
-          <b>dependencies:</b> {depsCount}
-        </div>
-        <div>
-          <b>devDependencies:</b> {devDepsCount}
+      <div className="mb-3 rounded-xl border border-neutral-800 bg-neutral-900/50 p-4 leading-relaxed">
+        <div className="flex flex-col gap-2 sm:flex-row sm:gap-6">
+          <div className="flex flex-col">
+            <span className="text-[10px] uppercase tracking-wider text-neutral-500 font-bold">Project Name</span>
+            <span className="font-mono text-blue-400">{pkg?.name ?? '(unknown)'}</span>
+          </div>
+          <div className="flex flex-col">
+            <span className="text-[10px] uppercase tracking-wider text-neutral-500 font-bold">Dependencies</span>
+            <span className="text-lg font-semibold">{depsCount}</span>
+          </div>
+          <div className="flex flex-col">
+            <span className="text-[10px] uppercase tracking-wider text-neutral-500 font-bold">Dev Dependencies</span>
+            <span className="text-lg font-semibold">{devDepsCount}</span>
+          </div>
         </div>
       </div>
-
-      <div style={{ padding: 12, border: '1px solid #333', borderRadius: 10 }}>
-        <b>Pure compute output:</b>
-        <div style={{ marginTop: 8, display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+      <div className="rounded-xl border border-neutral-800 bg-neutral-900/50 p-4">
+        <h3 className="mb-3 text-sm font-bold text-neutral-400">Pure compute output:</h3>
+        <div className="flex flex-wrap gap-2">
           {computed.map((n) => (
             <span
               key={n}
-              style={{
-                border: '1px solid #444',
-                padding: '6px 10px',
-                borderRadius: 999,
-                background: '#111',
-              }}
+              className="flex h-10 w-10 items-center justify-center rounded-full border border-neutral-700 bg-neutral-950 font-mono text-sm shadow-inner transition-transform hover:scale-110"
             >
               {n}
             </span>

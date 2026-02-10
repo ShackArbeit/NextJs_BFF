@@ -1,9 +1,7 @@
 'use client'
-
 import Link from 'next/link'
 import { useMemo, useState } from 'react'
 import type { DemoMeta } from '../demos/types'
-
 export default function StreamingShell({
   demos,
   activeKey,
@@ -11,54 +9,34 @@ export default function StreamingShell({
 }: {
   demos: DemoMeta[]
   activeKey: string
-  children: React.ReactNode
+  children?: React.ReactNode
 }) {
   const [note, setNote] = useState('這是 client state，切換 tab 不會消失')
   const [showTips, setShowTips] = useState(true)
-
   const items = useMemo(() => demos, [demos])
-
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: '320px 1fr', gap: 16, color: '#fff' }}>
-      <aside style={{ border: '1px solid #333', borderRadius: 12, padding: 16 }}>
-        <h2 style={{ marginTop: 0 }}>Streaming / Cache Demos</h2>
-
-        <div style={{ marginBottom: 12 }}>
-          <label style={{ display: 'block', fontSize: 12, opacity: 0.8 }}>Client state note</label>
+    <div className="grid grid-cols-[320px_1fr] gap-4 text-white">
+      <aside className="rounded-xl border border-neutral-800 p-4">
+        <h2 className="mt-0 text-xl font-bold">Streaming / Cache Demos</h2>
+        <div className="mb-3">
+          <label className="block text-xs opacity-80">Client state note</label>
           <input
             value={note}
             onChange={(e) => setNote(e.target.value)}
-            style={{
-              width: '100%',
-              padding: 8,
-              borderRadius: 8,
-              border: '1px solid #444',
-              background: '#111',
-              color: '#fff',
-            }}
+            className="w-full rounded-lg border border-neutral-700 bg-neutral-900 p-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50"
           />
-          <div style={{ marginTop: 8, fontSize: 12, opacity: 0.8 }}>
+          <div className="mt-2 text-xs opacity-80">
             可以觀察切換 tab 後，client state 仍保留
           </div>
         </div>
-
         <button
           onClick={() => setShowTips((v) => !v)}
-          style={{
-            width: '100%',
-            padding: 10,
-            borderRadius: 10,
-            border: '1px solid #444',
-            background: '#171717',
-            color: '#fff',
-            cursor: 'pointer',
-          }}
+          className="w-full rounded-lg border border-neutral-700 bg-neutral-900 p-2.5 text-white transition-colors hover:bg-neutral-800 active:scale-[0.98]"
         >
           Toggle tips (client state)
         </button>
-
         {showTips && (
-          <div style={{ marginTop: 10, fontSize: 12, opacity: 0.85, lineHeight: 1.5 }}>
+          <div className="mt-2.5 text-xs leading-relaxed opacity-85">
             觀察重點
             <br />
             1) 先點 use-cache 觀察 cached 的時間
@@ -69,30 +47,25 @@ export default function StreamingShell({
           </div>
         )}
 
-        <hr style={{ margin: '16px 0', borderColor: '#333' }} />
-
-        <nav style={{ display: 'grid', gap: 8 }}>
+        <hr className="my-4 border-neutral-800" />
+        <nav className="grid gap-2">
           {items.map((d) => (
             <Link
               key={d.key}
               href={`/streaming?tab=${d.key}`}
-              style={{
-                padding: 10,
-                borderRadius: 10,
-                textDecoration: 'none',
-                border: '1px solid #333',
-                background: d.key === activeKey ? '#2a2a2a' : '#121212',
-                color: '#fff',
-              }}
+              className={`rounded-lg border p-2.5 no-underline transition-colors ${
+                d.key === activeKey
+                  ? 'border-neutral-600 bg-neutral-800'
+                  : 'border-neutral-800 bg-neutral-950 hover:bg-neutral-900'
+              }`}
             >
-              <div style={{ fontWeight: 700 }}>{d.title}</div>
-              <div style={{ fontSize: 12, opacity: 0.75 }}>{d.description}</div>
+              <div className="font-bold">{d.title}</div>
+              <div className="text-xs opacity-75">{d.description}</div>
             </Link>
           ))}
         </nav>
       </aside>
-
-      <main style={{ border: '1px solid #333', borderRadius: 12, padding: 16 }}>
+      <main className="rounded-xl border border-neutral-800 p-4">
         {children}
       </main>
     </div>
