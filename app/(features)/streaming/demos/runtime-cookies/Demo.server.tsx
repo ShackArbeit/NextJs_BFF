@@ -3,22 +3,23 @@ import { Suspense } from 'react'
 import { cacheLife } from 'next/cache'
 import DemoHeader from '../../_ui/DemoHeader'
 import { sleep, nowLabel } from '../utils'
-
 async function RuntimePanel() {
-  await sleep(800)
-
+  await sleep(1500)
   const store = await cookies()
-  const theme = store.get('theme')?.value ?? '(no cookie: theme)'
-  const visit = store.get('visit')?.value ?? '(no cookie: visit)'
+  // console.log('Cookie Store:',store)
+  const theme = store.get('theme')?.value ?? '(無 Cookie：theme)'
+  const visit = store.get('visit')?.value ?? '(無 Cookie：visit)'
 
   return (
-    <div style={{ padding: 12, border: '1px solid #333', borderRadius: 10 }}>
-      <div style={{ opacity: 0.8 }}>Resolved at: {nowLabel()}</div>
-      <div>
-        <b>cookie theme:</b> {theme}
-      </div>
-      <div>
-        <b>cookie visit:</b> {visit}
+    <div className="p-3 border border-zinc-700 rounded-xl bg-zinc-900/50">
+      <div className="opacity-80 text-sm mb-2 text-zinc-400">解析時間：{nowLabel()}</div>
+      <div className="space-y-1">
+        <div className="text-zinc-200">
+          <span className="font-bold text-blue-400">Cookie 主題 (theme)：</span> {theme}
+        </div>
+        <div className="text-zinc-200">
+          <span className="font-bold text-blue-400">Cookie 訪問次數 (visit)：</span> {visit}
+        </div>
       </div>
     </div>
   )
@@ -27,20 +28,20 @@ async function RuntimePanel() {
 async function CachedBlock() {
   'use cache'
   cacheLife('hours')
-
-  await sleep(1200)
+  await sleep(3000)
   const res = await fetch('https://jsonplaceholder.typicode.com/users?_limit=3')
   const users = await res.json()
-
   return (
-    <div style={{ padding: 12, border: '1px solid #333', borderRadius: 10 }}>
-      <div style={{ opacity: 0.8 }}>
-        Cached generatedAt: <b>{nowLabel()}</b>
+    <div className="p-3 border border-zinc-700 rounded-xl bg-zinc-900/50">
+      <div className="opacity-80 text-sm text-zinc-400">
+        快取生成時間：<span className="font-bold text-green-400">{nowLabel()}</span>
       </div>
-      <ul style={{ marginTop: 8 }}>
+      <ul className="mt-3 space-y-1 divide-y divide-zinc-800">
         {users.map((u: any) => (
-          <li key={u.id}>
-            {u.name} - <span style={{ opacity: 0.8 }}>{u.email}</span>
+          <li key={u.id} className="pt-1 first:pt-0">
+            <span className="text-zinc-100">{u.name}</span>
+            <span className="mx-2 text-zinc-500">-</span>
+            <span className="opacity-80 text-zinc-400 text-sm">{u.email}</span>
           </li>
         ))}
       </ul>
@@ -50,28 +51,36 @@ async function CachedBlock() {
 
 export default async function RuntimeCookiesDemo() {
   return (
-    <div style={{ color: '#fff' }}>
+    <div className="text-white space-y-6">
       <DemoHeader
-        title="Runtime Data（cookies）"
-        description="cookies() 是 runtime data，必須在 request time 取得，需配合 Suspense。"
-        concepts={['cookies()', 'runtime data', 'Suspense']}
+        title="執行階段數據（Cookies）"
+        description="cookies() 屬於執行階段數據 (Runtime Data)，必須在請求時取得，建議配合 Suspense 使用。"
+        concepts={['cookies()', '執行階段數據', 'Suspense']}
         observe={[
-          '先看到 fallback，稍後才讀到 cookies',
-          'generatedAt 每次 request 都會變',
-          'runtime 與 cached 區塊更新頻率不同',
+          '會先看到加載狀態 (Fallback)，隨後才顯示內容',
+          '解析時間在每次重新整理後都會更新',
+          '執行階段區塊與快取區塊的更新頻率不同',
         ]}
-        warning="runtime data 不能在 use cache 區塊中使用"
+        warning="執行階段數據 (Runtime Data) 不能在「use cache」區塊內直接使用"
       />
 
-      <h3>A) Runtime panel</h3>
-      <Suspense fallback={<p>Loading runtime cookies...</p>}>
-        <RuntimePanel />
-      </Suspense>
+      <section>
+        <h3 className="text-lg font-semibold mb-3 flex items-center gap-2">
+          <span className="bg-blue-500 w-1 h-5 rounded-full" />
+          A) 執行階段面板 (Runtime Panel)
+        </h3>
+        <Suspense fallback={<p className="text-zinc-500 animate-pulse">正在讀取 Cookie 數據...</p>}>
+          <RuntimePanel />
+        </Suspense>
+      </section>
 
-      <div style={{ height: 16 }} />
-
-      <h3>B) Cached block</h3>
-      <CachedBlock />
+      <section>
+        <h3 className="text-lg font-semibold mb-3 flex items-center gap-2">
+          <span className="bg-green-500 w-1 h-5 rounded-full" />
+          B) 快取區塊 (Cached Block)
+        </h3>
+        <CachedBlock />
+      </section>
     </div>
   )
 }

@@ -49,7 +49,7 @@ export const DEMO_COMPONENTS: Record<DemoKey, DemoItem['Component']> = DEMO_ITEM
   {} as Record<DemoKey, DemoItem['Component']>
 )
 
-export const DEFAULT_TAB: DemoKey = 'use-cache'
+export const DEFAULT_TAB: DemoKey = 'auto-prerender'
 
 export function getDemoMeta(tab?: string) {
   const key = (tab || DEFAULT_TAB) as DemoKey
