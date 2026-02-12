@@ -1,32 +1,34 @@
-'use client'
-
-import { useState } from 'react'
-
+"use client";
+import { useState } from "react";
 export default function DetailCard({
   title,
   body,
 }: {
-  title: string
-  body: string
+  title: string;
+  body: string;
 }) {
-  const [zoomed, setZoomed] = useState(false)
-
+  const [zoomed, setZoomed] = useState(false);
   return (
     <div
       onClick={() => setZoomed((v) => !v)}
-      style={{
-        transform: zoomed ? 'scale(1.04)' : 'scale(1)',
-        transition: 'transform 160ms ease',
-        transformOrigin: 'top left',
-        cursor: 'pointer',
-        padding: 12,
-        borderRadius: 12,
-        border: '1px solid rgba(255,255,255,0.12)',
-        background: 'rgba(0,0,0,0.18)',
-      }}
+      className={[
+        "cursor-pointer",
+        "p-3",
+        "rounded-[12px]",
+        "border border-white/10",
+        "bg-black/20",
+        "origin-top-left",
+        "transition-transform duration-150 ease-in-out",
+        zoomed ? "scale-[1.04]" : "scale-100",
+      ].join(" ")}
     >
-      <div style={{ fontSize: 16, fontWeight: 900, color: 'white' }}>{title}</div>
-      <div style={{ marginTop: 10, opacity: 0.85, lineHeight: 1.7, color: 'white' }}>{body}</div>
+      <div className="text-[16px] font-black text-white">
+        {title}
+      </div>
+
+      <div className="mt-[10px] opacity-85 leading-[1.7] text-white">
+        {body}
+      </div>
     </div>
-  )
+  );
 }

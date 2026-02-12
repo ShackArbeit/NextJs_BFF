@@ -15,53 +15,46 @@ export default function DemoCard({
   children?: ReactNode;
 }) {
   return (
-    <div
-      style={{
-        borderRadius: 18,
-        border: "1px solid rgba(255,255,255,0.12)",
-        background: "rgba(255,255,255,0.04)",
-        padding: 16,
-      }}
-    >
-      <div style={{ display: "flex", gap: 10, alignItems: "baseline" }}>
-        <div style={{ fontSize: 18, fontWeight: 800 }}>{title}</div>
+    <div className="rounded-[18px] border border-white/10 bg-white/5 p-4 transition-all duration-200 hover:bg-white/10 hover:-translate-y-1">
+      <div className="flex items-baseline gap-[10px]">
+        <div className="text-[18px] font-extrabold">
+          {title}
+        </div>
+
         {badge ? (
-          <span
-            style={{
-              fontSize: 12,
-              padding: "2px 8px",
-              borderRadius: 999,
-              border: "1px solid rgba(255,255,255,0.14)",
-              background: "rgba(255,255,255,0.06)",
-              opacity: 0.9,
-            }}
-          >
+          <span className="text-[12px] px-[8px] py-[2px] rounded-full border border-white/15 bg-white/10 opacity-90">
             {badge}
           </span>
         ) : null}
       </div>
-
-      <div style={{ marginTop: 8, opacity: 0.85, lineHeight: 1.6 }}>{desc}</div>
-
-      <div style={{ marginTop: 14, display: "flex", gap: 10, flexWrap: "wrap" }}>
+      <div className="mt-2 opacity-85 leading-relaxed">
+        {desc}
+      </div>
+      <div className="mt-[14px] flex flex-wrap gap-[10px]">
         <Link
           href={href}
-          style={{
-            display: "inline-block",
-            padding: "10px 12px",
-            borderRadius: 12,
-            border: "1px solid rgba(255,255,255,0.18)",
-            background: "linear-gradient(135deg, rgba(99,102,241,0.35), rgba(236,72,153,0.25))",
-            color: "white",
-            fontWeight: 700,
-            textDecoration: "none",
-          }}
+          className="
+            inline-block
+            px-[12px] py-[10px]
+            rounded-[12px]
+            border border-white/20
+            font-bold text-white
+            bg-[linear-gradient(135deg,rgba(99,102,241,0.35),rgba(236,72,153,0.25))]
+            transition-all duration-200
+            hover:brightness-110
+            hover:scale-[1.03]
+          "
         >
           Open →
         </Link>
       </div>
 
-      {children ? <div style={{ marginTop: 14 }}>{children}</div> : null}
+      {/* Children */}
+      {children ? (
+        <div className="mt-[14px]">
+          {children}
+        </div>
+      ) : null}
     </div>
   );
 }

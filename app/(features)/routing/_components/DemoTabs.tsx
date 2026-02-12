@@ -14,23 +14,24 @@ export default function DemoTabs() {
   const active = sp.get("tab") ?? "parallel";
 
   return (
-    <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+    <div className="flex flex-wrap gap-[10px]">
       {tabs.map((t) => {
         const isActive = active === t.key;
         return (
           <Link
             key={t.key}
             href={`/routing?tab=${t.key}`}
-            style={{
-              textDecoration: "none",
-              color: "white",
-              padding: "10px 12px",
-              borderRadius: 999,
-              border: "1px solid rgba(255,255,255,0.14)",
-              background: isActive ? "rgba(255,255,255,0.10)" : "rgba(255,255,255,0.04)",
-              fontWeight: 700,
-              opacity: isActive ? 1 : 0.8,
-            }}
+            className={[
+              "no-underline text-white",
+              "px-[12px] py-[10px]",
+              "rounded-full",
+              "border border-white/15",
+              "font-bold",
+              "transition-all duration-200",
+              isActive
+                ? "bg-white/10 opacity-100"
+                : "bg-white/5 opacity-80 hover:opacity-100 hover:bg-white/10",
+            ].join(" ")}
           >
             {t.label}
           </Link>

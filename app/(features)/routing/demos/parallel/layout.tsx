@@ -1,3 +1,5 @@
+import { Suspense } from "react";
+
 export default function ParallelLayout({
   feed,
   detail,
@@ -6,41 +8,23 @@ export default function ParallelLayout({
   detail: React.ReactNode;
 }) {
   return (
-    <div style={{ color: "white" }}>
-      <div style={{ fontSize: 20, fontWeight: 900 }}>Parallel Routes ✅</div>
-      <div style={{ marginTop: 8, opacity: 0.8, lineHeight: 1.6 }}>
+    <div className="text-white">
+      <div className="text-[20px] font-black">
+        Parallel Routes 
+      </div>
+      <div className="mt-2 opacity-80 leading-relaxed">
         這頁用 <b>@feed</b> + <b>@detail</b> 同時渲染兩個 slot。
       </div>
-
-      <div
-        style={{
-          marginTop: 14,
-          display: "grid",
-          gridTemplateColumns: "1.2fr 0.8fr",
-          gap: 14,
-          alignItems: "start",
-        }}
-      >
-        <div
-          style={{
-            borderRadius: 16,
-            border: "1px solid rgba(255,255,255,0.12)",
-            background: "rgba(255,255,255,0.04)",
-            padding: 14,
-          }}
-        >
-          {feed}
+      <div className="mt-[14px] grid grid-cols-[1.2fr_0.8fr] gap-[14px] items-start">
+        <div className="rounded-[16px] border border-white/10 bg-white/5 p-[14px] transition-all duration-200 hover:bg-white/10">
+          <Suspense fallback={<div className="text-sm opacity-70">Loading feed...</div>}>
+            {feed}
+          </Suspense>
         </div>
-
-        <div
-          style={{
-            borderRadius: 16,
-            border: "1px solid rgba(255,255,255,0.12)",
-            background: "rgba(255,255,255,0.04)",
-            padding: 14,
-          }}
-        >
-          {detail}
+        <div className="rounded-[16px] border border-white/10 bg-white/5 p-[14px] transition-all duration-200 hover:bg-white/10">
+          <Suspense fallback={<div className="text-sm opacity-70">Loading detail...</div>}>
+            {detail}
+          </Suspense>
         </div>
       </div>
     </div>
