@@ -7,9 +7,7 @@ export async function getCart() {
   'use cache'
   cacheTag('cart')
   cacheLife('hours')
-
-  await sleep(1500)
-
+  await sleep(4000)
   const res = await fetch('https://jsonplaceholder.typicode.com/todos?_limit=5')
   const todos = await res.json()
 
@@ -22,11 +20,9 @@ export async function getCart() {
     })),
   }
 }
-
 export async function updateCart(itemId: number) {
   'use server'
-
-  await sleep(800)
+  await sleep(2000)
   updateTag('cart')
 
   return { ok: true, updatedItemId: itemId, at: nowLabel() }

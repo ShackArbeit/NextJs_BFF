@@ -6,7 +6,7 @@ export default async function TagsRevalidateDemo() {
   const cart = await getCart()
 
   return (
-    <div style={{ color: '#fff' }}>
+    <div className="text-white">
       <DemoHeader
         title="cacheTag + revalidateTag（更新快取）"
         description="透過 mutation 讓 cache tag 失效並重新取得資料。"
@@ -17,15 +17,14 @@ export default async function TagsRevalidateDemo() {
           'Server Action 觸發 revalidate',
         ]}
       />
-
-      <div style={{ padding: 12, border: '1px solid #333', borderRadius: 10, marginBottom: 12 }}>
+      <div className="p-3 border border-[#333] rounded-[10px] mb-3">
         <div>
-          <b>generatedAt (cached):</b> {cart.generatedAt}
+          <span className="font-bold">generatedAt (cached):</span> {cart.generatedAt}
         </div>
-        <ul style={{ marginTop: 10 }}>
+        <ul className="mt-[10px]">
           {cart.items.map((it: any) => (
             <li key={it.id}>
-              <b>{it.title}</b> — qty: {it.qty}
+              <span className="font-bold">{it.title}</span> — qty: {it.qty}
             </li>
           ))}
         </ul>

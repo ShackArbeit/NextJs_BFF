@@ -37,7 +37,7 @@ export default function StreamingShell({
         </button>
         {showTips && (
           <div className="mt-2.5 text-xs leading-relaxed opacity-85">
-            觀察重點
+            Key Point
             <br />
             1) 先點 use-cache 觀察 cached 的時間
             <br />
