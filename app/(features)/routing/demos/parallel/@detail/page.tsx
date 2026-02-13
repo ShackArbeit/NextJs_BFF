@@ -1,4 +1,4 @@
-import DetailCard from "./DetailCard.client";
+﻿import DetailCard from "./DetailCard.client";
 type Post = { id: number; title: string; body: string };
 export default async function DetailSlot({
   searchParams,
@@ -15,7 +15,7 @@ export default async function DetailSlot({
   return (
     <div>
       <div className="font-black mb-[10px] text-white">
-          @detail (Post #{id})
+          @detail (文章 #{id})
       </div>
       <DetailCard title={post.title} body={post.body} />
       {/* <div className="mt-3 opacity-70 text-[12px] text-white">

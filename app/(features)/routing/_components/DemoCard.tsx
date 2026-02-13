@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+﻿import type { ReactNode } from "react";
 import Link from "next/link";
 
 export default function DemoCard({
@@ -45,7 +45,7 @@ export default function DemoCard({
             hover:scale-[1.03]
           "
         >
-          Open →
+          開啟
         </Link>
       </div>
 

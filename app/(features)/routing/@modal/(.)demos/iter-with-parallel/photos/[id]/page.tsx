@@ -1,6 +1,6 @@
 ﻿import Modal from "@/app/(features)/routing/_components/Modal";
 
-export default async function InterceptedPhotoModal({
+export default async function InterceptedIterPhotoModal({
   params,
 }: {
   params: Promise<{ id: string }>;
@@ -17,8 +17,7 @@ export default async function InterceptedPhotoModal({
         />
       </div>
       <div className="mt-3 leading-[1.7] text-white/80">
-        URL 是 <code className="rounded bg-white/10 px-1 text-white">/routing/demos/photos/{id}</code>,
-        但在 <code className="rounded bg-white/10 px-1 text-white">/routing</code> 以彈窗呈現.
+        此詳情會攔截成彈窗, 底下的平行欄位仍保留.
       </div>
     </Modal>
   );

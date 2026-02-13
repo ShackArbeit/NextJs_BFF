@@ -1,12 +1,12 @@
-"use client";
+﻿"use client";
 
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 
 const tabs = [
-  { key: "parallel", label: "Parallel Routes" },
-  { key: "intercepting", label: "Intercepting Routes" },
-  { key: "iter", label: "Intercepting + Parallel" },
+  { key: "parallel", label: "Parallel Routing" },
+  { key: "intercepting", label: "Intercepting Routing" },
+  { key: "iter", label: "Parallel Plus Intercepting" },
 ] as const;
 
 export default function DemoTabs() {

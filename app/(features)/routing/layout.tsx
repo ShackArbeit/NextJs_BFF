@@ -5,7 +5,7 @@ export default function RoutingLayout({
   modal,
 }: {
   children: ReactNode;
-  modal: ReactNode; // from @modal slot
+  modal: ReactNode; 
 }) {
   return (
     <div style={{ padding: 24 }}>

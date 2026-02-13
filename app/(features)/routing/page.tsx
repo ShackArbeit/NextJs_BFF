@@ -1,4 +1,4 @@
-import { Suspense } from "react"; 
+﻿import { Suspense } from "react";
 import DemoTabs from "./_components/DemoTabs";
 import DemoCard from "./_components/DemoCard";
 
@@ -16,51 +16,51 @@ async function RoutingContent({
       {active === "parallel" && (
         <>
           <DemoCard
-            title="Parallel Routes Demo"
+            title="Parallel Routing Demo"
             badge="@feed + @detail"
-            desc="同一個 URL 結構下，同時渲染兩個 slot（例如左欄 Feed、右欄 Detail）。"
+            desc="URL 下同時渲染兩個 slot (列表, 詳情)."
             href="/routing/demos/parallel"
           />
-          <DemoCard
+          {/* <DemoCard
             title="JSONPlaceholder Content"
             badge="posts"
             desc="Parallel 的 feed 我們用 JSONPlaceholder 拉文章列表，detail 顯示單篇。"
             href="/routing/demos/parallel"
-          />
+          /> */}
         </>
       )}
 
       {active === "intercepting" && (
         <>
           <DemoCard
-            title="Intercepting Routes Demo"
-            badge="(.) modal intercept"
-            desc="點圖片進 detail 時，在 /routing 上以 Modal 呈現（攔截）；直接貼 URL 則是 full page。"
+            title="Intercepting Routing Demo"
+            badge="(.) 彈窗攔截"
+            desc="點圖片進詳情會成彈窗; 直接貼 URL 是完整頁面."
             href="/routing/demos/photos"
           />
-          <DemoCard
+          {/* <DemoCard
             title="Picsum Gallery"
             badge="picsum.photos"
             desc="用 Picsum 取得圖片列表與 detail。"
             href="/routing/demos/photos"
-          />
+          /> */}
         </>
       )}
 
       {active === "iter" && (
         <>
           <DemoCard
-            title="Intercepting + Parallel"
-            badge="list + modal"
-            desc="同一頁面維持 list（主內容），detail 用攔截成 modal（@modal slot）。"
+            title="Parallel Plus Intercepting Demo "
+            badge="列表 + 彈窗"
+            desc="列表保留, 詳情以彈窗顯示 (@modal slot)."
             href="/routing/demos/iter-with-parallel"
           />
-          <DemoCard
+          {/* <DemoCard
             title="Why this matters"
             badge="interview-ready"
             desc="這種模式很像後台系統：列表不丟失、detail 用 overlay，使用者體驗超好。"
             href="/routing/demos/iter-with-parallel"
-          />
+          /> */}
         </>
       )}
     </div>
@@ -80,19 +80,19 @@ export default function RoutingHome({
         ].join(" ")}
       >
         <div className="text-[22px] font-black tracking-[0.2px]">
-          Routing Demos (App Router)
+          路由示範 (App Router)
         </div>
 
         <div className="mt-2 opacity-85 leading-relaxed">
-          這裡用 <b>searchParams(tab)</b> 做導覽與說明；真正的 Parallel/Intercepting 展示會在 demos 的路由結構完成。
+          用 searchParams(tab) 做導覽; 平行/攔截示範在 demos 路由結構.
         </div>
         <div className="mt-[14px]">
-          <Suspense fallback={<div className="text-sm opacity-70">Loading tabs...</div>}>
+          <Suspense fallback={<div className="text-sm opacity-70">載入分頁中...</div>}>
             <DemoTabs />
           </Suspense>
         </div>
       </div>
-      <Suspense fallback={<div className="mt-4 text-white">Loading content...</div>}>
+      <Suspense fallback={<div className="mt-4 text-white">載入內容中...</div>}>
         <RoutingContent searchParams={searchParams} />
       </Suspense>
       {/* <div className="mt-4 text-[13px] opacity-70">

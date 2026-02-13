@@ -1,4 +1,4 @@
-import Link from "next/link";
+﻿import Link from "next/link";
 
 type Post = { id: number; title: string; body: string };
 
@@ -11,7 +11,7 @@ export default async function FeedSlot() {
   return (
     <div>
       <div className="font-black mb-[10px] text-white">
-          @feed (Posts)
+          @feed (文章)
       </div>
       <div className="grid gap-[10px]">
         {posts.map((p) => (

@@ -1,4 +1,4 @@
-import Link from "next/link";
+﻿import Link from "next/link";
 
 type PicsumItem = {
   id: string;
@@ -11,42 +11,28 @@ export default async function PhotosPage() {
   const items = (await res.json()) as PicsumItem[];
 
   return (
-    <div style={{ color: "white" }}>
-      <div style={{ fontSize: 20, fontWeight: 900 }}>Intercepting Routes ✅ (Gallery)</div>
-      <div style={{ marginTop: 8, opacity: 0.8, lineHeight: 1.6 }}>
-        從這裡點進 detail：在某些父層（例如 /routing）會被攔截成 modal。
-        直接貼 <code>/routing/demos/photos/[id]</code> 則是 full page。
+    <div className="text-white">
+      <div className="text-[20px] font-black">攔截路由 (圖庫)</div>
+      <div className="mt-2 leading-[1.6] text-white/80">
+        點圖片進詳情會成彈窗; 直接貼
+        <code className="rounded bg-white/10 px-1">/routing/demos/photos/[id]</code>
+        是完整頁面.
       </div>
-
-      <div
-        style={{
-          marginTop: 14,
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
-          gap: 12,
-        }}
-      >
+      <div className="mt-[14px] grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-3">
         {items.map((it) => (
           <Link
             key={it.id}
             href={`/routing/demos/photos/${it.id}`}
-            style={{
-              textDecoration: "none",
-              color: "white",
-              borderRadius: 16,
-              overflow: "hidden",
-              border: "1px solid rgba(255,255,255,0.12)",
-              background: "rgba(255,255,255,0.04)",
-            }}
+            className="group block overflow-hidden rounded-[16px] border border-white/10 bg-white/[0.04] text-white no-underline transition-transform hover:scale-[1.02] hover:bg-white/[0.08]"
           >
             <img
               src={`https://picsum.photos/id/${it.id}/600/360`}
               alt={`picsum ${it.id}`}
-              style={{ width: "100%", height: 150, objectFit: "cover", display: "block" }}
+              className="block h-[150px] w-full object-cover"
             />
-            <div style={{ padding: 12 }}>
-              <div style={{ fontWeight: 900 }}>Photo #{it.id}</div>
-              <div style={{ opacity: 0.75, marginTop: 6 }}>by {it.author}</div>
+            <div className="p-3">
+              <div className="font-black">照片 #{it.id}</div>
+              <div className="mt-1.5 text-sm text-white/75">作者 {it.author}</div>
             </div>
           </Link>
         ))}
