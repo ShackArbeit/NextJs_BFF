@@ -3,15 +3,15 @@
 
 # 使用的資料庫 => MongoDB Atlas 
 ## 使用 Mongoose 與 NextJs 連線
-### 連線方式在 app/lib/mongoose.ts
+### 連線方式在 app/lib/fakedate.ts（已改用本機記憶體 fakeData）
 
-## 結構 
+## 結構 app/(features)/server-actions
 ## 根目錄是 page.tsx 
 ## 與 page.tsx 同一層有一個 (demos) 資料夾，裡面有以下的當案
 ## 與 page.tsx 同一層有一個 action.ts 檔案，是定義各 server action function 的地方
 ### 在 app/models 裡面有 CityPost.ts 、LanguagePost.ts 、MarrAgePost.ts 、SeasonPost.ts、TaaCoffeePost.ts 等五個檔案，是定義資料庫的結構
 
-### 裡面有以下檔案
+### app/(features)/server-actions/(demos) 中有以下檔案 
 ### A.action_in_server_coponent.tsx
 * **直接在 server component 使用 server action**
 * 一個留言板讓多位使用者可以討論自己最喜歡 "台灣的哪一個城市"？
@@ -41,7 +41,7 @@
 ### 在 page.tsx 中使用 searchParams 方向，調用 (demos) 資料夾中的各 .tsx 檔案
 * 例如當路由是 `/server-action?tab="action_in_server_coponent"` 就是將 (demos) 中的 `action_in_server_coponent.tsx` 內容呈現。
 
-## 共用 Form 結構
+## 共用 app/(features)/server-actions/_component 結構
 
 ### BoardShell.tsx：共用「頁面外框 / 版型容器」
 * **功用**：提供所有留言板共用的 UI 外框（layout）。
@@ -67,7 +67,7 @@
 2. **BoardForm.client** 在上方讓人留言。
 3. **BoardList.server** 在下方顯示留言列表。
 
-## 補充：action.ts 中刪除留言的設定
+## 補充：app/(features)/server-actions/action.ts 中刪除留言的設定
 **Soft delete**
 * 不真的刪 DB，而是：schema 增加 `isDeleted: boolean`、`deletedAt`。
 * 刪除 action 只更新旗標。
@@ -77,9 +77,3 @@
 * ❌ 稍微多一點 schema 欄位。
 
 
-## Codex 你需要做什麼呢 ?
-### 1. 幫我完成 action_in_server_coponent.tsx、action_in_client_coponent.tsx、 client_actionstate_form.tsx、client_transition_button.tsx、client_actionstate_with_transition.tsx 的內容
-
-### 2. 參考 CityPost.ts 的內容，幫我完成 LanguagePost.ts 、MarrAgePost.ts 、SeasonPost.ts、TaaCoffeePost.ts 的內容，並幫我且改這些檔案在 app/server-actions/action.ts 中的引入路徑
-
-### 3. 幫我完成 app/server-actions/_component 中的 BoardShell.tsx 、BoardForm.client.tsx  &  BoardList.server.tsx 的內容

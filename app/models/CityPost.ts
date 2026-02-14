@@ -1,27 +1,24 @@
-// models/CityPost.ts
-import mongoose, { Schema, type Model, type InferSchemaType } from "mongoose";
 
-const CityPostSchema = new Schema(
+export type CityPostDoc = {
+  _id?: string;
+  username: string;
+  answer: string;
+  reason: string;
+  isDeleted?: boolean;
+  deletedAt?: Date | null;
+  createdAt?: Date;
+  updatedAt?: Date;
+};
+
+export const CITY_POST_DEFAULTS: Array<Pick<CityPostDoc, "username" | "answer" | "reason">> = [
   {
-    username: { type: String, required: true, trim: true, maxlength: 30 },
-    answer: { type: String, required: true, trim: true, maxlength: 50 }, // 城市名稱
-    reason: { type: String, required: true, trim: true, maxlength: 300 },
-    isDeleted: { type: Boolean, default: false, index: true },
-    deletedAt: { type: Date, default: null },
+    username: "旅人Nina",
+    answer: "京都",
+    reason: "寺廟與小巷充滿故事，慢步調最適合放空。",
   },
   {
-    timestamps: true, // createdAt / updatedAt
-    versionKey: false,
-  }
-);
-
-CityPostSchema.index({ createdAt: -1 });
-
-
-export type CityPostDoc = InferSchemaType<typeof CityPostSchema>;
-
-const CityPost: Model<CityPostDoc> =
-  (mongoose.models.CityPost as Model<CityPostDoc>) ||
-  mongoose.model<CityPostDoc>("CityPost", CityPostSchema);
-
-export default CityPost;
+    username: "Ray",
+    answer: "台北",
+    reason: "深夜想吃都找得到，雨天也有捷運到處晃。",
+  },
+];
