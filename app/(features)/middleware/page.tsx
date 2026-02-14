@@ -11,7 +11,19 @@ function normalizeTab(v: unknown): TabKey {
   return v === "dal-dto" ? "dal-dto" : "proxy";
 }
 
-export default async function MiddlewareFeaturePage({
+export default function MiddlewareFeaturePage({
+  searchParams,
+}: {
+  searchParams: Promise<{ tab?: string }>;
+}) {
+  return (
+    <Suspense fallback={<div className="px-6 py-10 text-zinc-300">Loading middleware demo…</div>}>
+      <MiddlewareContent searchParams={searchParams} />
+    </Suspense>
+  );
+}
+
+async function MiddlewareContent({
   searchParams,
 }: {
   searchParams: Promise<{ tab?: string }>;

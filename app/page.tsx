@@ -26,8 +26,6 @@ export default function HomePage() {
             。雖然 Next.js 同時支援 Node.js 與 Edge 運行環境，但在大型系統架構中，仍應依賴獨立的後端服務。
           </p>
         </div>
-
-        {/* Feature list */}
         <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2">
           {FEATURES.map((feature) => (
             <div
