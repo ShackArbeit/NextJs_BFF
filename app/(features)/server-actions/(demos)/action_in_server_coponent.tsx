@@ -1,4 +1,3 @@
-export const runtime = "nodejs";
 import BoardForm from "../_component/BoardForm.client";
 import BoardList from "../_component/BoardList.server";
 import BoardShell from "../_component/BoardShell";
@@ -9,30 +8,30 @@ export default async function ActionInServerComponent() {
 
   return (
     <BoardShell
-      title="Server Component 直掛 Server Action"
-      description="最基本的 server action 使用法：在 Server Component 中載入 server action，表單由 client 元件接手處理。送出後 revalidatePath 直接刷新資料。"
-      badge="城市留言板 · form action"
+      title="Server Component + Server Action"
+      description="Server Component 直接透過 form action 連結 Action。useActionState 則用來驅動 Pending 與錯誤提示的 UI，同時該 Action 會模擬延遲響應的效果。"
+      badge="useActionState pending"
       accent="emerald"
     >
       <BoardForm
         action={createCityPost}
         formKey="city"
         mode="action-state"
-        submitLabel="分享城市"
-        pendingLabel="送出中..."
+        submitLabel="提交想法"
+        pendingLabel="提交中..."
         placeholders={{
-          username: "旅人",
-          answer: "京都 / 台北 / 紐約",
-          reason: "因為氛圍剛剛好",
+          username: "你的名字是!",
+          answer: "東京 / 首爾 / 京都",
+          reason: "都是不錯的亞洲旅遊城市",
         }}
-        helperText="Server Component + useActionState：最貼近官方文件的寫法。"
+        helperText="請輸入你最喜歡的城市以及為什麼吧!"
         accent="emerald"
       />
 
       <BoardList
         board="city"
         posts={posts}
-        emptyHint="還沒有人分享喜歡的城市，來當第一個吧！"
+        emptyHint="No one has shared a favorite city yet."
         accent="emerald"
       />
     </BoardShell>

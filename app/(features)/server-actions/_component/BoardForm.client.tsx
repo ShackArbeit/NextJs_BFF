@@ -22,6 +22,7 @@ type BoardFormProps = {
   accent?: Accent;
   defaultState?: ActionState | undefined;
   mode?: FormMode;
+  onSuccess?: (res: ActionState<PostDTO>) => void;
 };
 
 const accentMap: Record<Accent, string> = {
@@ -47,6 +48,7 @@ export default function BoardForm({
   defaultState,
   mode = "action-state",
   formKey,
+  onSuccess,
 }: BoardFormProps) {
   const formRef = useRef<HTMLFormElement>(null);
 
@@ -56,7 +58,10 @@ export default function BoardForm({
   const [state, formAction, isActionPending] = useActionState(
     async (prevState: ActionState | undefined, formData: FormData) => {
       const res = await action(prevState, formData);
-      if (res.ok) formRef.current?.reset();
+      if (res.ok) {
+        formRef.current?.reset();
+        onSuccess?.(res);
+      }
       return res;
     },
     defaultState ?? { ok: false, message: "" }
@@ -75,7 +80,10 @@ export default function BoardForm({
     startTransition(() => {
       action(undefined, formData).then((res) => {
         setOptimisticState(res);
-        if (res.ok) formRef.current?.reset();
+        if (res.ok) {
+          formRef.current?.reset();
+          onSuccess?.(res);
+        }
       });
     });
   };

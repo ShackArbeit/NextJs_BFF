@@ -1,11 +1,8 @@
 import { randomUUID } from "crypto";
 import { CITY_POST_DEFAULTS } from "@/app/models/CityPost";
 import { MARRYAGE_POST_DEFAULTS } from "@/app/models/MarryAgePost";
-import { SEASON_POST_DEFAULTS } from "@/app/models/SeasonPost";
-import { LANGUAGE_POST_DEFAULTS } from "@/app/models/LanguagePost";
-import { TEACOFFEE_POST_DEFAULTS } from "@/app/models/TeaCoffeePost";
 
-export type BoardKey = "city" | "marryAge" | "season" | "language" | "teaCoffee";
+export type BoardKey = "city" | "marryAge";
 
 export type FakePost = {
   _id: string;
@@ -40,9 +37,6 @@ function seedBoard(board: BoardKey, defaults: Array<{ username: string; answer: 
 export const fakeData: FakePost[] = [
   ...seedBoard("city", CITY_POST_DEFAULTS),
   ...seedBoard("marryAge", MARRYAGE_POST_DEFAULTS),
-  ...seedBoard("season", SEASON_POST_DEFAULTS),
-  ...seedBoard("language", LANGUAGE_POST_DEFAULTS),
-  ...seedBoard("teaCoffee", TEACOFFEE_POST_DEFAULTS),
 ];
 
 export function listFakePosts(board: BoardKey, limit = 50, includeDeleted = false): FakePost[] {

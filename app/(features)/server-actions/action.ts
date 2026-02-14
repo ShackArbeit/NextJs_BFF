@@ -39,14 +39,7 @@ export type PostDTO = {
 const PATHS: Record<BoardKey, string> = {
   city: "/server-actions",
   marryAge: "/server-actions",
-  season: "/server-actions",
-  language: "/server-actions",
-  teaCoffee: "/server-actions",
 };
-
-/** =========================
- * Helpers
- * ========================= */
 
 function parseFormData(formData: FormData): PostInput {
   return {
@@ -56,9 +49,9 @@ function parseFormData(formData: FormData): PostInput {
   };
 }
 
+
 function validateInput(input: PostInput): FieldErrors {
   const errors: FieldErrors = {};
-
   if (!input.username) errors.username = "請輸入使用者名稱";
   if (!input.answer) errors.answer = "請輸入你的答案";
   if (!input.reason) errors.reason = "請輸入原因";
@@ -80,7 +73,6 @@ async function createPostForBoard(
   prevState: ActionState | undefined,
   formData: FormData
 ): Promise<ActionState<PostDTO>> {
-  // 模擬延遲
   await new Promise((resolve) => setTimeout(resolve, 4000));
 
   const input = parseFormData(formData);
@@ -88,10 +80,8 @@ async function createPostForBoard(
   if (hasErrors(errors)) {
     return { ok: false, message: "欄位驗證失敗", errors };
   }
-
   const post = createFakePost(board, input);
   revalidatePath(PATHS[board]);
-
   return {
     ok: true,
     message: "已新增留言 🎉",
@@ -100,28 +90,20 @@ async function createPostForBoard(
     },
   };
 }
-
 async function listPostsForBoard(board: BoardKey, limit = 50): Promise<PostDTO[]> {
   return listFakePosts(board, limit);
 }
 
-/** =========================
- * Soft delete / Restore / Deleted list
- * ========================= */
-
 export async function softDeletePost(board: BoardKey, id: string): Promise<ActionState> {
   "use server";
-
   const ok = softDeleteFakePost(board, id);
   if (!ok) return { ok: false, message: "找不到該留言，可能已被刪除" };
-
   revalidatePath(PATHS[board]);
   return { ok: true, message: "已刪除留言（Soft delete）" };
 }
 
 export async function restorePost(board: BoardKey, id: string): Promise<ActionState> {
   "use server";
-
   const ok = restoreFakePost(board, id);
   if (!ok) return { ok: false, message: "找不到該留言" };
 
@@ -158,43 +140,4 @@ export async function createMarryAgePost(
 export async function listMarryAgePosts(limit = 50): Promise<PostDTO[]> {
   "use server";
   return listPostsForBoard("marryAge", limit);
-}
-
-export async function createSeasonPost(
-  prevState: ActionState | undefined,
-  formData: FormData
-): Promise<ActionState<PostDTO>> {
-  "use server";
-  return createPostForBoard("season", prevState, formData);
-}
-
-export async function listSeasonPosts(limit = 50): Promise<PostDTO[]> {
-  "use server";
-  return listPostsForBoard("season", limit);
-}
-
-export async function createLanguagePost(
-  prevState: ActionState | undefined,
-  formData: FormData
-): Promise<ActionState<PostDTO>> {
-  "use server";
-  return createPostForBoard("language", prevState, formData);
-}
-
-export async function listLanguagePosts(limit = 50): Promise<PostDTO[]> {
-  "use server";
-  return listPostsForBoard("language", limit);
-}
-
-export async function createTeaCoffeePost(
-  prevState: ActionState | undefined,
-  formData: FormData
-): Promise<ActionState<PostDTO>> {
-  "use server";
-  return createPostForBoard("teaCoffee", prevState, formData);
-}
-
-export async function listTeaCoffeePosts(limit = 50): Promise<PostDTO[]> {
-  "use server";
-  return listPostsForBoard("teaCoffee", limit);
 }

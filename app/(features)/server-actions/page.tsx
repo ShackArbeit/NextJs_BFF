@@ -3,16 +3,8 @@ import type { ReactElement } from "react";
 import { Suspense } from "react";
 import ActionInServerComponent from "./(demos)/action_in_server_coponent";
 import ActionInClientComponent from "./(demos)/action_in_client_coponent";
-import ClientActionStateForm from "./(demos)/client_actionstate_form";
-import ClientTransitionButton from "./(demos)/client_transition_button";
-import ClientActionStateWithTransition from "./(demos)/client_actionstate_with_transition";
 
-type TabKey =
-  | "action_in_server_coponent"
-  | "action_in_client_coponent"
-  | "client_actionstate_form"
-  | "client_transition_button"
-  | "client_actionstate_with_transition";
+type TabKey = "action_in_server_coponent" | "action_in_client_coponent";
 
 const tabs: Array<{
   key: TabKey;
@@ -22,38 +14,22 @@ const tabs: Array<{
 }> = [
   {
     key: "action_in_server_coponent",
-    label: "Server Component + Action",
-    hint: "最基本的 Server Action 使用法",
+    label: "Server Component + useActionState",
+    hint: "Pending UI + simulated delay in a server route",
     component: ActionInServerComponent,
   },
   {
     key: "action_in_client_coponent",
-    label: "Client Component 呼叫",
-    hint: "把 action 當 props 傳進 client",
+    label: "Client Component + useTransition",
+    hint: "startTransition keeps UI responsive while pending",
     component: ActionInClientComponent,
-  },
-  {
-    key: "client_actionstate_form",
-    label: "useActionState 表單",
-    hint: "直接把 action 回傳映射到 UI",
-    component: ClientActionStateForm,
-  },
-  {
-    key: "client_transition_button",
-    label: "useTransition 控制提交流程",
-    hint: "手動 startTransition 包 action",
-    component: ClientTransitionButton,
-  },
-  {
-    key: "client_actionstate_with_transition",
-    label: "ActionState + Transition",
-    hint: "雙管齊下，體驗更滑順",
-    component: ClientActionStateWithTransition,
   },
 ];
 
 type PageProps = {
-  searchParams: Promise<Record<string, string | string[] | undefined>> | Record<string, string | string[] | undefined>;
+  searchParams:
+    | Promise<Record<string, string | string[] | undefined>>
+    | Record<string, string | string[] | undefined>;
 };
 
 export default async function Page({ searchParams }: PageProps) {
@@ -63,15 +39,16 @@ export default async function Page({ searchParams }: PageProps) {
         <p className="text-xs uppercase tracking-[0.25em] text-zinc-400">Feature</p>
         <h1 className="mt-2 text-3xl font-semibold text-white">Server Actions Demo</h1>
         <p className="mt-2 max-w-3xl text-sm text-zinc-300">
-          這頁集結 5 種 Server Action 使用情境：從最簡單的 Server Component 直接掛 action，到
-          useActionState / useTransition 的組合拳。提交後會 revalidatePath，清單即時刷新。
+          Two focused demos: a server component that uses server actions with useActionState for
+          pending feedback, and a client component that calls the same action via props and wraps
+          submission in useTransition to keep the UI responsive.
         </p>
       </header>
 
       <Suspense
         fallback={
           <div className="rounded-2xl border border-white/10 bg-white/5 p-8 text-sm text-zinc-300">
-            載入中...
+            Loading...
           </div>
         }
       >
@@ -119,11 +96,12 @@ async function TabContent({ searchParams }: PageProps) {
       <Suspense
         fallback={
           <div className="rounded-2xl border border-white/10 bg-white/5 p-8 text-sm text-zinc-300">
-            載入中...
+            Loading tab...
           </div>
         }
       >
-        <ActiveComponent />
+        {/* key forces remount when switching tabs so local client state (e.g., success banners) doesn't leak */}
+        <ActiveComponent key={activeTab.key} />
       </Suspense>
     </>
   );
