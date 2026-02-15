@@ -18,9 +18,7 @@ export default async function DetailSlot({
           @detail (文章 #{id})
       </div>
       <DetailCard title={post.title} body={post.body} />
-      {/* <div className="mt-3 opacity-70 text-[12px] text-white">
-        點擊卡片可放大，再點一次回到原尺寸。
-      </div> */}
+      
     </div>
   );
 }

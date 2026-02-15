@@ -1,6 +1,4 @@
-/**
- * Proxy 示範（Tailwind 精簡版）
- */
+
 
 type ExternalPost = {
   userId: number;
@@ -10,8 +8,6 @@ type ExternalPost = {
 };
 
 async function getProxyPosts(): Promise<ExternalPost[]> {
-  // 提示：在 Server Components 內呼叫自己的 Route Handler。
-  // 部署時記得改成完整網域，避免平台阻擋內網請求。
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:3000";
   const res = await fetch(`${baseUrl}/api/proxy/posts`, { cache: "no-store" });
 
@@ -28,7 +24,6 @@ export default async function ProxyDemo() {
 
   return (
     <div className="max-w-5xl mx-auto space-y-8 p-6">
-      {/* 流程說明 */}
       <section className="relative overflow-hidden rounded-2xl border border-blue-500/20 bg-zinc-950 p-6 shadow-2xl">
         <div className="absolute top-0 right-0 -mt-4 -mr-4 h-24 w-24 rounded-full bg-blue-500/10 blur-3xl" />
 
@@ -54,7 +49,6 @@ export default async function ProxyDemo() {
         </ol>
       </section>
 
-      {/* 卡片網格 */}
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {posts.slice(0, 6).map((p) => (
           <article

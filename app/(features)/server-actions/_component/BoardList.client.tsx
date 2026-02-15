@@ -1,5 +1,8 @@
-"use client";
+﻿"use client";
 
+import { useRouter } from "next/navigation";
+import { useTransition } from "react";
+import DeleteButton from "./DeleteButton.client";
 import type { BoardKey, PostDTO } from "../action";
 
 type Accent = "emerald" | "sky" | "amber" | "violet";
@@ -9,6 +12,7 @@ type BoardListProps = {
   posts: PostDTO[];
   emptyHint?: string;
   accent?: Accent;
+  onDelete?: (id: string) => Promise<any>;
 };
 
 const pill: Record<Accent, string> = {
@@ -32,9 +36,21 @@ function formatDate(value?: string | null) {
 export default function BoardListClient({
   board,
   posts,
-  emptyHint = "尚無留言，來分享你的想法吧！",
+  emptyHint = "尚無留言，快來分享你的想法！",
   accent = "emerald",
+  onDelete,
 }: BoardListProps) {
+  const router = useRouter();
+  const [pending, startTransition] = useTransition();
+
+  const handleDelete = async (id: string) => {
+    if (!onDelete) return;
+    await onDelete(id);
+    startTransition(() => {
+      router.refresh();
+    });
+  };
+
   return (
     <div className="rounded-2xl border border-white/10 bg-zinc-950/60 p-5 shadow-lg shadow-black/20">
       <div className="flex items-center justify-between">
@@ -64,10 +80,16 @@ export default function BoardListClient({
                   </p>
                   <h5 className="mt-1 text-sm font-semibold text-white">{post.username}</h5>
                 </div>
+                {onDelete ? (
+                  <DeleteButton action={() => handleDelete(post._id)} />
+                ) : null}
               </div>
 
               <p className="mt-2 text-lg font-semibold text-white">{post.answer}</p>
               <p className="mt-1 text-sm text-zinc-300 leading-relaxed">{post.reason}</p>
+              {pending ? (
+                <p className="mt-2 text-[11px] text-amber-200">Refreshing...</p>
+              ) : null}
             </article>
           ))
         )}

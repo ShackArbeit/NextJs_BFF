@@ -1,7 +1,7 @@
-"use client";
+﻿"use client";
 
 import type { FormEvent } from "react";
-import { useActionState, useRef, useState, useTransition } from "react";
+import { useActionState, useEffect, useRef, useState, useTransition } from "react";
 import type { ActionState, PostDTO } from "../action";
 
 type FieldKey = "username" | "answer" | "reason";
@@ -42,8 +42,8 @@ export default function BoardForm({
   title,
   helperText,
   placeholders,
-  submitLabel = "送出",
-  pendingLabel = "處理中...",
+  submitLabel = "提交",
+  pendingLabel = "提交中...",
   accent = "emerald",
   defaultState,
   mode = "action-state",
@@ -53,6 +53,7 @@ export default function BoardForm({
   const formRef = useRef<HTMLFormElement>(null);
 
   const [optimisticState, setOptimisticState] = useState<ActionState | undefined>(defaultState);
+  const [visibleState, setVisibleState] = useState<ActionState | undefined>(defaultState);
   const [isTransitionPending, startTransition] = useTransition();
 
   const [state, formAction, isActionPending] = useActionState(
@@ -74,6 +75,16 @@ export default function BoardForm({
       : mode === "action-state-with-transition"
         ? isActionPending || isTransitionPending
         : isTransitionPending;
+
+  useEffect(() => {
+    setVisibleState(currentState);
+    if (currentState?.ok && currentState.message) {
+      const timer = setTimeout(() => {
+        setVisibleState((prev) => (prev === currentState ? undefined : prev));
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [currentState]);
 
   const actionStateSubmit = formAction;
   const transitionSubmit = (formData: FormData) => {
@@ -117,8 +128,8 @@ export default function BoardForm({
     ) : null;
 
   const statusTone =
-    currentState && currentState.message
-      ? currentState.ok
+    visibleState && visibleState.message
+      ? visibleState.ok
         ? "border-emerald-400/40 bg-emerald-400/10 text-emerald-100"
         : "border-rose-400/40 bg-rose-400/10 text-rose-100"
       : "";
@@ -138,11 +149,11 @@ export default function BoardForm({
         className="mt-4 space-y-4"
       >
         <div>
-          <label className="text-sm text-zinc-300">你的暱稱</label>
+          <label className="text-sm text-zinc-300">你的稱呼</label>
           <input
             name="username"
             required
-            placeholder={placeholders?.username ?? "例如：小明 / Zoe"}
+            placeholder={placeholders?.username ?? "e.g. Alex / Zoe"}
             className={inputBase}
             aria-invalid={Boolean(currentState?.errors?.username)}
           />
@@ -150,11 +161,11 @@ export default function BoardForm({
         </div>
 
         <div>
-          <label className="text-sm text-zinc-300">你的答案</label>
+          <label className="text-sm text-zinc-300">你的回答</label>
           <input
             name="answer"
             required
-            placeholder={placeholders?.answer ?? "簡短輸入你的選擇"}
+            placeholder={placeholders?.answer ?? "簡短輸入你的回答"}
             className={inputBase}
             aria-invalid={Boolean(currentState?.errors?.answer)}
           />
@@ -162,12 +173,12 @@ export default function BoardForm({
         </div>
 
         <div>
-          <label className="text-sm text-zinc-300">為什麼？</label>
+          <label className="text-sm text-zinc-300">原因</label>
           <textarea
             name="reason"
             required
             rows={3}
-            placeholder={placeholders?.reason ?? "分享一句理由或小故事"}
+            placeholder={placeholders?.reason ?? "分享你的想法與理由"}
             className={`${inputBase} resize-none`}
             aria-invalid={Boolean(currentState?.errors?.reason)}
           />
@@ -184,18 +195,18 @@ export default function BoardForm({
           </button>
           <p className="text-xs text-zinc-500">
             {mode === "transition"
-              ? "useTransition：手動 startTransition 提交"
+              ? "useTransition：使用 startTransition 提交"
               : mode === "action-state-with-transition"
                 ? "useActionState + useTransition"
-                : "useActionState：直接綁定 action"}
+                : "useActionState：綁定 action"}
           </p>
         </div>
       </form>
 
-      {currentState?.message ? (
+      {visibleState?.message ? (
         <div className={`mt-4 rounded-lg border px-4 py-3 text-sm ${statusTone}`}>
           <p className="font-medium">
-            {currentState.ok ? "成功" : "提醒"} · {currentState.message}
+            {visibleState.ok ? "成功" : "失敗"} · {visibleState.message}
           </p>
         </div>
       ) : null}

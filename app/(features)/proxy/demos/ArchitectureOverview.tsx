@@ -48,9 +48,7 @@ export default function ArchitectureOverview() {
 | JSONPlaceholder (API)     |
 +---------------------------+`}
         </pre>
-        {/* <p className="mt-3 text-xs text-zinc-500">
-          從輕量的中介層與資料閘道開始；先把資料契約控好，框架優勢才有發揮空間。
-        </p> */}
+
       </section>
 
       <section className="grid grid-cols-1 gap-4 lg:grid-cols-3">
@@ -85,34 +83,7 @@ export default function ArchitectureOverview() {
         />
       </section>
 
-      {/* <section className="rounded-xl border border-zinc-800 bg-zinc-900 p-6">
-        <h3 className="text-sm font-semibold text-white">重點摘要</h3>
 
-        <ul className="mt-4 space-y-2 text-sm text-zinc-300">
-          <li className="flex gap-2">
-            <span className="mt-1 h-1.5 w-1.5 rounded-full bg-zinc-200" />
-            <span>
-              把 Next.js 視為{" "}
-              <span className="text-white font-medium">BFF 邊界</span>：前端體驗在前，整合邏輯在後。
-            </span>
-          </li>
-          <li className="flex gap-2">
-            <span className="mt-1 h-1.5 w-1.5 rounded-full bg-zinc-200" />
-            <span>
-              資料先經過 <span className="text-white font-medium">DAL</span>{" "}
-              再由 <span className="text-white font-medium">DTO</span> 定型後才給 UI。
-            </span>
-          </li>
-          <li className="flex gap-2">
-            <span className="mt-1 h-1.5 w-1.5 rounded-full bg-zinc-200" />
-            <span>
-              依需求再加 Middleware；保持{" "}
-              <span className="text-white font-medium">UI 與資料層乾淨</span>{" "}
-              方便測試與迭代。
-            </span>
-          </li>
-        </ul>
-      </section> */}
     </div>
   );
 }

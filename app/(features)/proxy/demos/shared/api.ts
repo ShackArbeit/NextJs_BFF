@@ -1,7 +1,4 @@
-/**
- * 外部免費 API
- * - JSONPlaceholder: https://jsonplaceholder.typicode.com
- */
+
 
 export const EXTERNAL_API_BASE = "https://jsonplaceholder.typicode.com";
 

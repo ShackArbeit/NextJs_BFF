@@ -6,7 +6,6 @@ import { sleep, nowLabel } from '../utils'
 async function RuntimePanel() {
   await sleep(1500)
   const store = await cookies()
-  // console.log('Cookie Store:',store)
   const theme = store.get('theme')?.value ?? '(無 Cookie：theme)'
   const visit = store.get('visit')?.value ?? '(無 Cookie：visit)'
 

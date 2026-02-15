@@ -89,9 +89,7 @@ async function PageContent({
               <div style={{ fontSize: 12, opacity: active ? 0.7 : 0.75, marginTop: 4 }}>
                 {t.desc}
               </div>
-              {/* <div style={{ fontSize: 12, marginTop: 8, opacity: active ? 0.7 : 0.6 }}>
-                tab=<span style={{ fontFamily: "monospace" }}>{t.key}</span>
-              </div> */}
+              
             </Link>
           );
         })}
@@ -125,7 +123,7 @@ function PageFallback() {
   );
 }
 
-/* ---------- styles (no tailwind dependency) ---------- */
+
 
 const pageStyle: React.CSSProperties = {
   padding: 24,

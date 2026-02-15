@@ -100,7 +100,7 @@ async function TabContent({ searchParams }: PageProps) {
           </div>
         }
       >
-        {/* key forces remount when switching tabs so local client state (e.g., success banners) doesn't leak */}
+        
         <ActiveComponent key={activeTab.key} />
       </Suspense>
     </>

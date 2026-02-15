@@ -12,7 +12,7 @@ export default async function PhotosPage() {
 
   return (
     <div className="text-white">
-      <div className="text-[20px] font-black">攔截路由 (圖庫)</div>
+      <div className="text-[20px] font-black">攔截路由</div>
       <div className="mt-2 leading-[1.6] text-white/80">
         點圖片進詳情會成彈窗; 直接貼
         <code className="rounded bg-white/10 px-1">/routing/demos/photos/[id]</code>

@@ -1,6 +1,5 @@
 import { cache } from 'react'
 
-// cache() 函數允許在單次渲染請求中去重複（Deduplication）
 const getPost = cache(async () => {
   const res = await fetch('https://jsonplaceholder.typicode.com/posts/4', {
     cache: 'force-cache',

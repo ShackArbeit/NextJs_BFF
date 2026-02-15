@@ -1,4 +1,3 @@
-// app/page.tsx
 export default function HomePage() {
   return (
     <section className="px-10 py-10">

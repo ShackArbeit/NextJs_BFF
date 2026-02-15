@@ -108,7 +108,7 @@ async function PageContent({
             })}
           </nav>
 
-          <div className="p-5 rounded-2xl border border-emerald-500/10 bg-emerald-500/[0.02] shadow-sm">
+          {/* <div className="p-5 rounded-2xl border border-emerald-500/10 bg-emerald-500/[0.02] shadow-sm">
             <div className="flex items-center gap-2 mb-3 text-emerald-500 font-bold text-xs uppercase tracking-widest">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
               Architecture Hint
@@ -116,10 +116,10 @@ async function PageContent({
             <p className="text-xs text-zinc-400 leading-relaxed italic">
               🧠 小提醒：這一頁是 <strong className="text-zinc-200">Server Component</strong>，這意味著我們可以直接讀取 URL 的 <code className="text-emerald-400/80">searchParams</code> 並在伺服器端完成分發邏輯，無需依賴 Client-side useEffect。
             </p>
-          </div>
+          </div> */}
         </aside>
 
-        {/* Content Area */}
+        
         <section className="min-h-[500px] rounded-3xl border border-white/10 bg-zinc-900/30 backdrop-blur-sm p-1 lg:p-2 overflow-hidden shadow-2xl">
           <div className="h-full w-full rounded-[1.4rem] bg-zinc-950/50 p-6 md:p-8">
             <Suspense fallback={<DemoFallback tab={activeTab} />}>

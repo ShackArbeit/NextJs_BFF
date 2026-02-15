@@ -7,7 +7,6 @@ export default async function AutoPrerenderDemo() {
   const raw = fs.readFileSync(filePath, 'utf-8')
 
   const pkg = JSON.parse(raw)
-  // console.log('PKG:',pkg)
   const depsCount = pkg?.dependencies ? Object.keys(pkg.dependencies).length : 0
   console.log("depCount:",depsCount)
   const devDepsCount = pkg?.devDependencies ? Object.keys(pkg.devDependencies).length : 0

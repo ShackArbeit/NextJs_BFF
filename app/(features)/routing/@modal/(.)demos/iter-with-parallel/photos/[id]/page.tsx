@@ -8,7 +8,7 @@ export default async function InterceptedIterPhotoModal({
   const { id } = await params;
 
   return (
-    <Modal title={`攔截彈窗 - 照片 #${id}`}>
+    <Modal title={`攔截視窗 - 照片 #${id}`}>
       <div className="overflow-hidden rounded-[16px] border border-white/10 bg-white/[0.04]">
         <img
           src={`https://picsum.photos/id/${id}/1000/600`}

@@ -21,12 +21,7 @@ async function RoutingContent({
             desc="URL 下同時渲染兩個 slot (列表, 詳情)."
             href="/routing/demos/parallel"
           />
-          {/* <DemoCard
-            title="JSONPlaceholder Content"
-            badge="posts"
-            desc="Parallel 的 feed 我們用 JSONPlaceholder 拉文章列表，detail 顯示單篇。"
-            href="/routing/demos/parallel"
-          /> */}
+          
         </>
       )}
 
@@ -38,12 +33,7 @@ async function RoutingContent({
             desc="點圖片進詳情會成彈窗; 直接貼 URL 是完整頁面."
             href="/routing/demos/photos"
           />
-          {/* <DemoCard
-            title="Picsum Gallery"
-            badge="picsum.photos"
-            desc="用 Picsum 取得圖片列表與 detail。"
-            href="/routing/demos/photos"
-          /> */}
+          
         </>
       )}
 
@@ -55,12 +45,7 @@ async function RoutingContent({
             desc="列表保留, 詳情以彈窗顯示 (@modal slot)."
             href="/routing/demos/iter-with-parallel"
           />
-          {/* <DemoCard
-            title="Why this matters"
-            badge="interview-ready"
-            desc="這種模式很像後台系統：列表不丟失、detail 用 overlay，使用者體驗超好。"
-            href="/routing/demos/iter-with-parallel"
-          /> */}
+          
         </>
       )}
     </div>
@@ -95,10 +80,7 @@ export default function RoutingHome({
       <Suspense fallback={<div className="mt-4 text-white">載入內容中...</div>}>
         <RoutingContent searchParams={searchParams} />
       </Suspense>
-      {/* <div className="mt-4 text-[13px] opacity-70">
-        小提示：你也可以直接打：<code>/routing?tab=parallel</code> /{" "}
-        <code>intercepting</code> / <code>iter</code>
-      </div> */}
+      
     </div>
   );
 }

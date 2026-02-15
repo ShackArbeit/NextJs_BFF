@@ -49,7 +49,7 @@ export default function DemoCard({
         </Link>
       </div>
 
-      {/* Children */}
+      
       {children ? (
         <div className="mt-[14px]">
           {children}

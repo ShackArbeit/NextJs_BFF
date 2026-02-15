@@ -1,5 +1,3 @@
-// models/MarryAgePost.ts
-// 改用 MongoDB 驅動，僅保留型別與預設種子資料
 
 export type MarryAgePostDoc = {
   _id?: string;
