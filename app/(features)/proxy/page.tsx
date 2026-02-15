@@ -71,11 +71,11 @@ async function ProxyContent({
             <DemoShell
               title="Proxy Route Handler (BFF): wrap external API calls"
               subtitle="Client calls /api/proxy/posts; the server forwards to JSONPlaceholder and scrubs the response."
-              bullets=[
+              bullets={[
                 "Benefits: can inject headers/tokens, avoid CORS pain, and centralize error handling.",
                 "Keeps external schemas hidden so UI does not depend on raw payloads.",
                 "Recommendation: proxy requests, then map to DTOs before sending to components.",
-              ]
+              ]}
               routeExample="/proxy?tab=proxy"
             >
               <Suspense
@@ -109,11 +109,11 @@ async function ProxyContent({
             <DemoShell
               title="DAL + DTO: keep UI contracts stable"
               subtitle="DAL owns external API calls; DTO defines the shape the UI consumes."
-              bullets=[
+              bullets={[
                 "DTO limits which fields are exposed and keeps the UI safe.",
                 "DAL centralizes fetch logic, retries, headers, and errors.",
                 "UI only depends on DTO output, so backend schema changes stay isolated.",
-              ]
+              ]}
               routeExample="/proxy?tab=dal-dto"
             >
               <DalDtoDemo />

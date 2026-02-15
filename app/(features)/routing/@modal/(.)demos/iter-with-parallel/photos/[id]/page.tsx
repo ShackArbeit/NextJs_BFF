@@ -1,6 +1,19 @@
-﻿import Modal from "@/app/(features)/routing/_components/Modal";
+﻿import { Suspense } from "react";
+import Modal from "@/app/(features)/routing/_components/Modal";
 
-export default async function InterceptedIterPhotoModal({
+export default function InterceptedIterPhotoModal({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  return (
+    <Suspense fallback={<Modal title="Modal">Loading...</Modal>}>
+      <ModalContent params={params} />
+    </Suspense>
+  );
+}
+
+async function ModalContent({
   params,
 }: {
   params: Promise<{ id: string }>;
@@ -8,7 +21,7 @@ export default async function InterceptedIterPhotoModal({
   const { id } = await params;
 
   return (
-    <Modal title={`攔截視窗 - 照片 #${id}`}>
+    <Modal title={`Modal - Photo #${id}`}>
       <div className="overflow-hidden rounded-[16px] border border-white/10 bg-white/[0.04]">
         <img
           src={`https://picsum.photos/id/${id}/1000/600`}
@@ -17,7 +30,7 @@ export default async function InterceptedIterPhotoModal({
         />
       </div>
       <div className="mt-3 leading-[1.7] text-white/80">
-        此詳情會攔截成彈窗, 底下的平行欄位仍保留.
+        This detail is intercepted as a modal; the parallel columns remain.
       </div>
     </Modal>
   );
