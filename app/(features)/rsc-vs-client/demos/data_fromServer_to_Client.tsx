@@ -20,18 +20,29 @@ export default async function DataFromServerToClient() {
   };
 
   return (
-    <div style={{ display: "grid", gap: 16 }}>
-      <h2 style={{ margin: 0, fontSize: 20, fontWeight: 900 }}>
-        ④ 從 Server 傳資料到 Client（props / 序列化邊界）
-      </h2>
+    <div className="flex flex-col gap-6">
+      <div className="space-y-3">
+        <div className="flex items-center gap-3">
+          <span className="flex items-center justify-center w-8 h-8 rounded-lg bg-indigo-500/20 text-indigo-400 font-bold border border-indigo-500/30">
+            4
+          </span>
+          <h2 className="text-xl font-black tracking-tight text-zinc-100">
+            從 Server 傳資料到 Client（props / 序列化邊界）
+          </h2>
+        </div>
 
-      <p style={{ margin: 0, fontSize: 16, color: "rgba(255,255,255,0.76)", lineHeight: 1.8 }}>
-        這個 demo 用 Server Component 去 fetch 外部 API，然後把資料用 props 丟給 Client Component 做互動。
-        <br />
-        <b>重點：</b>從 Server 跨越邊界傳給 Client 的 props 必須是 <b>可序列化（JSON-safe）</b> 的格式。
-      </p>
-
-      <ClientPostsPanel payload={safePayload} />
+        <p className="text-base leading-relaxed text-zinc-400 max-w-3xl">
+          這個 demo 展示了由 <span className="text-zinc-200 font-medium">Server Component</span> 進行資料抓取，並將結果透過 <span className="italic text-indigo-400">props</span> 注入給 <span className="text-zinc-200 font-medium">Client Component</span>。
+          <br />
+          <span className="inline-flex items-center mt-2 px-2 py-0.5 rounded text-sm bg-zinc-800 text-zinc-300 border border-zinc-700">
+            <strong className="text-indigo-400 mr-2">重點：</strong>
+            傳輸內容必須是可序列化（JSON-safe）的格式。
+          </span>
+        </p>
+      </div>
+      <div className="rounded-2xl border border-zinc-800/50 bg-gradient-to-b from-zinc-900/50 to-transparent p-1">
+        <ClientPostsPanel payload={safePayload} />
+      </div>
 
       <HintCard />
     </div>
@@ -40,25 +51,27 @@ export default async function DataFromServerToClient() {
 
 function HintCard() {
   return (
-    <div
-      style={{
-        marginTop: 8,
-        borderRadius: 16,
-        border: "1px solid rgba(255,255,255,0.12)",
-        background: "rgba(0,0,0,0.16)",
-        padding: 18,
-        color: "rgba(255,255,255,0.78)",
-        lineHeight: 1.8,
-      }}
-    >
-      <div style={{ fontWeight: 900, marginBottom: 10, fontSize: 16 }}>KeyPoint🧠</div>
-      <ul style={{ margin: 0, paddingLeft: 20, fontSize: 15 }}>
-        <li>
-          「Server 負責 fetch 與組 payload，Client 負責互動呈現。」
-        </li>
-        <li>
-          「不可傳遞 Function、Class 實例或包含循環引用的物件，因為這些無法被序列化為 RSC Payload。」
-        </li>
+    <div className="relative overflow-hidden mt-2 rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm transition-hover hover:bg-white/[0.07]">
+      <div className="absolute -top-10 -right-10 h-32 w-32 bg-indigo-500/10 blur-[50px]" />    
+      <div className="flex items-center gap-2 mb-4">
+        <div className="p-1.5 rounded-md bg-amber-500/20 text-amber-500">
+          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </div>
+        <h3 className="font-black text-zinc-100 uppercase tracking-wider text-sm">Key Point 🧠</h3>
+      </div>
+
+      <ul className="space-y-3">
+        {[
+          "Server 負責 fetch 與組 payload，Client 負責互動呈現。",
+          "不可傳遞 Function、Class 實例或包含循環引用的物件，因為這些無法被序列化為 RSC Payload。"
+        ].map((text, i) => (
+          <li key={i} className="flex gap-3 text-[15px] leading-relaxed text-zinc-400">
+            <span className="text-indigo-500 font-mono select-none">/</span>
+            {text}
+          </li>
+        ))}
       </ul>
     </div>
   );

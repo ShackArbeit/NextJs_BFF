@@ -22,7 +22,7 @@ export default function DemoShell({
         <div className="mt-4 grid gap-3 md:grid-cols-2">
           <div className="rounded-xl border border-zinc-800 bg-zinc-950 p-4">
             <div className="text-sm font-semibold text-zinc-200">
-              Route Example
+              路由範例
             </div>
             <code className="mt-2 block rounded-lg bg-zinc-900 px-3 py-2 text-sm text-zinc-100">
               {routeExample}
@@ -31,7 +31,7 @@ export default function DemoShell({
 
           <div className="rounded-xl border border-zinc-800 bg-zinc-950 p-4">
             <div className="text-sm font-semibold text-zinc-200">
-              Key Takeaways
+              重點整理
             </div>
             <ul className="mt-2 space-y-2 text-sm text-zinc-300">
               {bullets.map((b, idx) => (

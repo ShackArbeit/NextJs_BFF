@@ -23,14 +23,13 @@ export default function RootLayout({
 
             <nav className="px-4 py-4 space-y-1 text-sm">
               <NavItem href="/" label="Overview" />
-              <NavItem href="/architecture" label="Architecture (BFF)" />
               <NavItem href="/server-actions" label="Server Actions" />
               <NavItem href="/data-fetching" label="Data Fetching" />
               <NavItem href="/streaming" label="Streaming & Suspense" />
               <NavItem href="/rsc-vs-client" label="RSC vs Client" />
               <NavItem href="/route-handlers" label="Route Handlers" />
               <NavItem href="/routing" label="Advanced Routing" />
-              <NavItem href="/middleware" label="Middleware" />
+              <NavItem href="/proxy" label="Proxy" />
             </nav>
           </aside>
 

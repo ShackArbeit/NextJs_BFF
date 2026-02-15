@@ -8,15 +8,13 @@ export default function HomePage() {
         </h2>
 
         <p className="mt-4 text-zinc-400 leading-relaxed">
-          本專案是針對現代{' '}
-          <span className="text-zinc-200 font-medium">Next.js App Router</span>{' '}
-          功能的實作演示，專為技術面試而設計。
+            以下為{'   '}
+          <span className="text-zinc-200 font-medium">Next.js 16 App Router</span>{' '}
+          各功能的實作演示。
         </p>
-
-        {/* Highlight box */}
         <div className="mt-8 rounded-lg border border-zinc-800 bg-zinc-900 p-6">
           <h3 className="text-lg font-semibold text-white">
-            Architectural Positioning
+              簡介
           </h3>
           <p className="mt-2 text-sm text-zinc-400 leading-relaxed">
             在此專案中，Next.js 被刻意定位為{' '}
@@ -70,5 +68,9 @@ const FEATURES = [
   {
     title: 'Advanced Routing',
     description: '包含巢狀佈局（Nested Layouts）、路由分組及多樣的路由模式。',
+  },
+  {
+    title: 'Proxy',
+    description: 'DAL+ DTO 讓抓取外部資料更安全',
   },
 ]

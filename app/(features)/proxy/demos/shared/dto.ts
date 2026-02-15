@@ -1,12 +1,7 @@
-/**
- * DTO：輸出資料契約
- * 這裡示範：從外部 API 的 Post payload，收斂成 UI 只需要的欄位
- */
-
 export type PostDTO = {
   id: number;
   title: string;
-  summary: string; // 由 body 截斷產生，避免直接暴露完整 body
+  summary: string; 
 };
 
 type UnknownRecord = Record<string, unknown>;
@@ -28,11 +23,6 @@ function makeSummary(body: string, maxLen = 80) {
   return s.length <= maxLen ? s : s.slice(0, maxLen) + "…";
 }
 
-/**
- * 從未知 payload 建立 DTO（欄位白名單 + runtime guard）
- * - 成功回傳 PostDTO
- * - 失敗回傳 null（表示外部資料不符合契約）
- */
 export function toPostDTO(input: unknown): PostDTO | null {
   if (!isRecord(input)) return null;
 

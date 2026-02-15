@@ -1,18 +1,23 @@
 import Link from "next/link";
 
-type TabKey = "proxy" | "dal-dto";
+export type TabKey = "Whole Structure" | "proxy" | "dal-dto";
 
 export default function TabNav({ activeTab }: { activeTab: TabKey }) {
   const tabs: Array<{ key: TabKey; label: string; desc: string }> = [
     {
+      key: "Whole Structure",
+      label: "架構概覽",
+      desc: "先點擊了解基本概念",
+    },
+    {
       key: "proxy",
-      label: "Proxy Route Handler",
-      desc: "BFF 轉送外部 API",
+      label: "Proxy 路由處理",
+      desc: "BFF 作為外部 API 閘道",
     },
     {
       key: "dal-dto",
       label: "DAL + DTO",
-      desc: "資料層 + 契約收斂",
+      desc: "資料存取與轉換定義",
     },
   ];
 
@@ -23,7 +28,7 @@ export default function TabNav({ activeTab }: { activeTab: TabKey }) {
         return (
           <Link
             key={t.key}
-            href={{ pathname: "/middleware", query: { tab: t.key } }}
+            href={{ pathname: "/proxy", query: { tab: t.key } }}
             className={[
               "rounded-2xl border px-5 py-4 transition",
               isActive

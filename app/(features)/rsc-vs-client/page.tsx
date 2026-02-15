@@ -1,4 +1,3 @@
-
 import Link from "next/link";
 import { Suspense } from "react";
 import WhatIsRSCPayload from "./demos/whatis_RSC_Payload";
@@ -12,11 +11,7 @@ type TabKey =
   | "Server_with_Client"
   | "data_fromServer_to_Client";
 
-const TABS: Array<{
-  key: TabKey;
-  title: string;
-  desc: string;
-}> = [
+const TABS: Array<{ key: TabKey; title: string; desc: string }> = [
   {
     key: "whatis_RSC_Payload",
     title: "RSC Payload 是什麼？",
@@ -25,232 +20,156 @@ const TABS: Array<{
   {
     key: "stream_fromServer_to_Client",
     title: "Streaming：Server → Client",
-    desc: "Suspense +（可選）React use() 的體感 demo",
+    desc: "Suspense + React use() 的漸進式渲染體感",
   },
   {
     key: "Server_with_Client",
     title: "Server × Client 交錯組合",
-    desc: "composition：用 children/props slot 傳入 server-rendered UI",
+    desc: "Composition：用 slot 模式嵌入 Server UI",
   },
   {
     key: "data_fromServer_to_Client",
     title: "Data：Server → Client props",
-    desc: "JSON-safe 資料傳遞與序列化邊界",
+    desc: "JSON-safe 資料傳遞與序列化邊界範例",
   },
 ];
 
-function classNames(...xs: Array<string | false | undefined | null>) {
-  return xs.filter(Boolean).join(" ");
-}
-
-export default async function Page(props: {
+export default async function Page({
+  searchParams,
+}: {
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
   return (
-    <Suspense fallback={<PageFallback />}>
-      <PageContent searchParams={props.searchParams} />
-    </Suspense>
+    <main className="min-h-screen bg-[#070A12] text-zinc-200 selection:bg-indigo-500/30">
+      <div className="fixed inset-0 pointer-events-none overflow-hidden">
+        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-indigo-500/10 blur-[120px]" />
+        <div className="absolute bottom-[10%] right-[-5%] w-[30%] h-[30%] rounded-full bg-emerald-500/10 blur-[100px]" />
+      </div>
+
+      <Suspense fallback={<PageFallback />}>
+        <PageContent searchParams={searchParams} />
+      </Suspense>
+    </main>
   );
 }
 
-async function PageContent(props: {
+async function PageContent({
+  searchParams: searchParamsPromise,
+}: {
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
-  const searchParams = (await props.searchParams) ?? {};
-  const tabRaw = searchParams.tab;
-  const tab = (Array.isArray(tabRaw) ? tabRaw[0] : tabRaw) as TabKey | undefined;
-
-  const activeTab: TabKey =
-    tab && TABS.some((t) => t.key === tab) ? tab : "whatis_RSC_Payload";
+  const searchParams = await searchParamsPromise;
+  const tab = (Array.isArray(searchParams.tab) ? searchParams.tab[0] : searchParams.tab) as TabKey | undefined;
+  const activeTab: TabKey = tab && TABS.some((t) => t.key === tab) ? tab : "whatis_RSC_Payload";
 
   return (
-    <main
-      style={{
-        minHeight: "100vh",
-        padding: "28px 18px",
-        background:
-          "radial-gradient(1200px 800px at 20% 10%, rgba(99,102,241,0.25), transparent 55%), radial-gradient(1000px 700px at 80% 30%, rgba(16,185,129,0.18), transparent 50%), #070A12",
-        color: "rgba(255,255,255,0.92)",
-      }}
-    >
-      <header style={{ maxWidth: 1100, margin: "0 auto 18px" }}>
-        <div style={{ display: "flex", alignItems: "baseline", gap: 10 }}>
-          <h1 style={{ fontSize: 28, fontWeight: 800, margin: 0 }}>
-            React Server Component vs Client Component
+    <div className="relative z-10 max-w-[1200px] mx-auto px-6 py-12">
+      <header className="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-4">
+        <div>
+          <h1 className="text-3xl font-black tracking-tighter text-white md:text-4xl">
+            React Server Component <span className="text-zinc-500 text-2xl font-light mx-2">vs</span> Client Component
           </h1>
-          <span
-            style={{
-              fontSize: 12,
-              padding: "3px 8px",
-              borderRadius: 999,
-              background: "rgba(255,255,255,0.08)",
-              border: "1px solid rgba(255,255,255,0.12)",
-            }}
-          >
-            /rsc-vs-client?tab=&lt;filename&gt;
-          </span>
+          <p className="mt-2 text-zinc-400 font-medium">深入理解 Next.js App Router 的架構核心與渲染邊界</p>
         </div>
-        <p style={{ margin: "10px 0 0", color: "rgba(255,255,255,0.72)" }}>
-          點 tab 切換 query string，對應到 demos/ 的檔名。✅
-        </p>
+        <div className="hidden md:block">
+          <code className="text-[11px] px-3 py-1.5 rounded-full bg-zinc-900 border border-zinc-800 text-zinc-500 font-mono shadow-sm">
+            /rsc-vs-client?tab={activeTab}
+          </code>
+        </div>
       </header>
-
-      <section
-        style={{
-          maxWidth: 1100,
-          margin: "0 auto",
-          display: "grid",
-          gridTemplateColumns: "360px 1fr",
-          gap: 14,
-        }}
-      >
-        <aside
-          style={{
-            borderRadius: 16,
-            border: "1px solid rgba(255,255,255,0.12)",
-            background: "rgba(255,255,255,0.04)",
-            padding: 12,
-          }}
-        >
-          <div style={{ fontSize: 13, fontWeight: 700, marginBottom: 10 }}>
-            Tabs（檔名即 tab 值）
-          </div>
-
-          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+      <div className="grid grid-cols-1 lg:grid-cols-[380px_1fr] gap-8">
+        <aside className="space-y-6">
+          <nav className="flex flex-col gap-3 p-2 rounded-2xl border border-white/5 bg-white/[0.02] backdrop-blur-md">
             {TABS.map((t) => {
               const isActive = t.key === activeTab;
               return (
-                <Link
-                  key={t.key}
-                  href={`/rsc-vs-client?tab=${t.key}`}
-                  style={{
-                    textDecoration: "none",
-                    color: "inherit",
-                  }}
-                >
-                  <div
-                    className={classNames(isActive && "active")}
-                    style={{
-                      borderRadius: 14,
-                      padding: "10px 12px",
-                      border: isActive
-                        ? "1px solid rgba(99,102,241,0.55)"
-                        : "1px solid rgba(255,255,255,0.10)",
-                      background: isActive
-                        ? "linear-gradient(180deg, rgba(99,102,241,0.22), rgba(255,255,255,0.04))"
-                        : "rgba(255,255,255,0.03)",
-                      boxShadow: isActive
-                        ? "0 10px 30px rgba(99,102,241,0.18)"
-                        : "none",
-                      transition: "all .15s ease",
-                    }}
-                  >
-                    <div style={{ fontWeight: 800, fontSize: 14 }}>
-                      {t.title}
+                <Link key={t.key} href={`?tab=${t.key}`} scroll={false} className="no-underline group">
+                  <div className={`
+                    relative p-4 rounded-xl transition-all duration-200 border
+                    ${isActive 
+                      ? "bg-indigo-500/10 border-indigo-500/40 shadow-[0_0_20px_rgba(99,102,241,0.1)] shadow-inner" 
+                      : "bg-transparent border-transparent hover:bg-white/[0.04] hover:border-white/10"}
+                  `}>
+                    <div className="flex items-center justify-between mb-1">
+                      <span className={`text-sm font-bold ${isActive ? "text-indigo-300" : "text-zinc-300 group-hover:text-zinc-100"}`}>
+                        {t.title}
+                      </span>
+                      {isActive && <div className="h-1.5 w-1.5 rounded-full bg-indigo-400 shadow-[0_0_8px_#818cf8]" />}
                     </div>
-                    <div
-                      style={{
-                        fontSize: 12,
-                        marginTop: 6,
-                        color: "rgba(255,255,255,0.68)",
-                        lineHeight: 1.4,
-                      }}
-                    >
+                    <p className="text-xs text-zinc-500 leading-relaxed line-clamp-2">
                       {t.desc}
-                    </div>
-                    <div
-                      style={{
-                        marginTop: 8,
-                        fontFamily:
-                          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace",
-                        fontSize: 11,
-                        color: "rgba(255,255,255,0.55)",
-                      }}
-                    >
+                    </p>
+                    <div className="mt-3 font-mono text-[10px] text-zinc-600 opacity-60">
                       tab={t.key}
                     </div>
                   </div>
                 </Link>
               );
             })}
-          </div>
+          </nav>
 
-          <div
-            style={{
-              marginTop: 14,
-              fontSize: 12,
-              color: "rgba(255,255,255,0.6)",
-              lineHeight: 1.5,
-            }}
-          >
-            🧠 小提醒：這一頁是 <b>Server Component</b>，所以可以安全讀取
-            searchParams、也可以做 server-side rendering 與 streaming。
+          <div className="p-5 rounded-2xl border border-emerald-500/10 bg-emerald-500/[0.02] shadow-sm">
+            <div className="flex items-center gap-2 mb-3 text-emerald-500 font-bold text-xs uppercase tracking-widest">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+              Architecture Hint
+            </div>
+            <p className="text-xs text-zinc-400 leading-relaxed italic">
+              🧠 小提醒：這一頁是 <strong className="text-zinc-200">Server Component</strong>，這意味著我們可以直接讀取 URL 的 <code className="text-emerald-400/80">searchParams</code> 並在伺服器端完成分發邏輯，無需依賴 Client-side useEffect。
+            </p>
           </div>
         </aside>
-        <section
-          style={{
-            borderRadius: 16,
-            border: "1px solid rgba(255,255,255,0.12)",
-            background: "rgba(255,255,255,0.04)",
-            padding: 14,
-            overflow: "hidden",
-          }}
-        >
-          <Suspense fallback={<DemoFallback tab={activeTab} />}>
-            {activeTab === "whatis_RSC_Payload" && <WhatIsRSCPayload />}
-            {activeTab === "stream_fromServer_to_Client" && (
-              <StreamFromServerToClient />
-            )}
-            {activeTab === "Server_with_Client" && <ServerWithClient />}
-            {activeTab === "data_fromServer_to_Client" && (
-              <DataFromServerToClient />
-            )}
-          </Suspense>
+
+        {/* Content Area */}
+        <section className="min-h-[500px] rounded-3xl border border-white/10 bg-zinc-900/30 backdrop-blur-sm p-1 lg:p-2 overflow-hidden shadow-2xl">
+          <div className="h-full w-full rounded-[1.4rem] bg-zinc-950/50 p-6 md:p-8">
+            <Suspense fallback={<DemoFallback tab={activeTab} />}>
+              {activeTab === "whatis_RSC_Payload" && <WhatIsRSCPayload />}
+              {activeTab === "stream_fromServer_to_Client" && <StreamFromServerToClient />}
+              {activeTab === "Server_with_Client" && <ServerWithClient />}
+              {activeTab === "data_fromServer_to_Client" && <DataFromServerToClient />}
+            </Suspense>
+          </div>
         </section>
-      </section>
-    </main>
+      </div>
+    </div>
   );
 }
 
 function PageFallback() {
   return (
-    <main
-      style={{
-        minHeight: "100vh",
-        padding: "28px 18px",
-        background:
-          "radial-gradient(1200px 800px at 20% 10%, rgba(99,102,241,0.25), transparent 55%), radial-gradient(1000px 700px at 80% 30%, rgba(16,185,129,0.18), transparent 50%), #070A12",
-        color: "rgba(255,255,255,0.92)",
-      }}
-    >
-      <section style={{ maxWidth: 1100, margin: "0 auto" }}>
-        <DemoFallback tab="loading" />
-      </section>
-    </main>
+    <div className="flex items-center justify-center min-h-screen p-6">
+      <div className="w-full max-w-[1100px] animate-pulse">
+        <div className="h-12 w-64 bg-zinc-800 rounded-lg mb-8" />
+        <div className="grid grid-cols-1 lg:grid-cols-[360px_1fr] gap-8">
+          <div className="h-96 bg-zinc-900/50 rounded-2xl" />
+          <div className="h-[500px] bg-zinc-900/50 rounded-2xl" />
+        </div>
+      </div>
+    </div>
   );
 }
 
 function DemoFallback({ tab }: { tab: string }) {
   return (
-    <div
-      style={{
-        padding: 14,
-        borderRadius: 14,
-        border: "1px dashed rgba(255,255,255,0.18)",
-        background: "rgba(0,0,0,0.12)",
-      }}
-    >
-      <div style={{ fontWeight: 800, fontSize: 14 }}>
-        Loading demo: <span style={{ opacity: 0.8 }}>{tab}</span> …
-      </div>
-      <div style={{ marginTop: 10, opacity: 0.7, fontSize: 12, lineHeight: 1.6 }}>
-        這裡的 fallback 會在 streaming / suspense 發生時先出現，讓你看到「先有殼，再補內容」的漸進體驗。
+    <div className="space-y-6">
+      <div className="p-6 rounded-2xl border border-zinc-800 border-dashed bg-zinc-900/40">
+        <div className="flex items-center gap-3 text-zinc-200 font-bold mb-3">
+          <div className="w-4 h-4 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin" />
+          Loading Demo: <span className="text-indigo-400 font-mono underline decoration-indigo-500/30 underline-offset-4">{tab}</span>
+        </div>
+        <p className="text-sm text-zinc-500 leading-relaxed max-w-lg">
+          這裡的 fallback 會在 streaming 發生時先出現，展示「先有骨架（Skeleton），再補內容」的流暢體驗。
+        </p>
       </div>
 
-      <div style={{ marginTop: 12, display: "grid", gap: 10 }}>
+      <div className="space-y-4">
         <SkeletonLine />
         <SkeletonLine />
-        <SkeletonLine w="70%" />
+        <SkeletonLine w="75%" />
+        <div className="pt-4 grid grid-cols-2 gap-4">
+          <div className="h-24 bg-zinc-800/50 rounded-xl" />
+          <div className="h-24 bg-zinc-800/50 rounded-xl" />
+        </div>
       </div>
     </div>
   );
@@ -258,13 +177,11 @@ function DemoFallback({ tab }: { tab: string }) {
 
 function SkeletonLine({ w = "100%" }: { w?: string }) {
   return (
-    <div
-      style={{
-        width: w,
-        height: 10,
-        borderRadius: 999,
-        background: "rgba(255,255,255,0.10)",
-      }}
-    />
+    <div 
+      className="h-3 rounded-full bg-zinc-800/60 overflow-hidden relative"
+      style={{ width: w }}
+    >
+      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full animate-[shimmer_2s_infinite]" />
+    </div>
   );
 }

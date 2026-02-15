@@ -1,29 +1,36 @@
 import Link from "next/link";
 import { Suspense } from "react";
-import TabNav from "./components/TabNav";
+import TabNav, { TabKey } from "./components/TabNav";
 import DemoShell from "./components/DemoShell";
 import RenameToProxyDemo from "./demos/Renam_to_Proxy";
 import DalDtoDemo from "./demos/DAL_DTO";
-
-type TabKey = "proxy" | "dal-dto";
+import ArchitectureOverview from "./demos/ArchitectureOverview";
 
 function normalizeTab(v: unknown): TabKey {
-  return v === "dal-dto" ? "dal-dto" : "proxy";
+  if (v === "proxy") return "proxy";
+  if (v === "dal-dto") return "dal-dto";
+  return "Whole Structure";
 }
 
-export default function MiddlewareFeaturePage({
+export default function ProxyFeaturePage({
   searchParams,
 }: {
   searchParams: Promise<{ tab?: string }>;
 }) {
   return (
-    <Suspense fallback={<div className="px-6 py-10 text-zinc-300">Loading middleware demo…</div>}>
-      <MiddlewareContent searchParams={searchParams} />
+    <Suspense
+      fallback={
+        <div className="px-6 py-10 text-zinc-300">
+          載入 Proxy / DAL+DTO 示範中...
+        </div>
+      }
+    >
+      <ProxyContent searchParams={searchParams} />
     </Suspense>
   );
 }
 
-async function MiddlewareContent({
+async function ProxyContent({
   searchParams,
 }: {
   searchParams: Promise<{ tab?: string }>;
@@ -38,19 +45,14 @@ async function MiddlewareContent({
           <div className="flex items-center justify-between gap-4">
             <div>
               <h1 className="text-3xl font-bold tracking-tight">
-                Middleware / Proxy / DAL+DTO Demo
+                Proxy / DAL+DTO 示範
               </h1>
-              <p className="mt-2 text-zinc-300">
-                使用 <code className="rounded bg-zinc-900 px-2 py-1">searchParams</code>{" "}
-                + query tab 切換示範：<code className="rounded bg-zinc-900 px-2 py-1">/middleware?tab=...</code>
-              </p>
             </div>
-
             <Link
               href="/"
               className="rounded-xl border border-zinc-800 bg-zinc-900 px-4 py-2 text-sm text-zinc-200 hover:bg-zinc-800"
             >
-              ← Back Home
+              返回首頁
             </Link>
           </div>
 
@@ -58,16 +60,20 @@ async function MiddlewareContent({
         </header>
 
         <main className="mt-8">
-          {activeTab === "proxy" ? (
+          {activeTab === "Whole Structure" ? (
+            <section className="space-y-6">
+              <ArchitectureOverview />
+            </section>
+          ) : activeTab === "proxy" ? (
             <DemoShell
-              title="Proxy Route Handler (BFF) — 快速但容易變成資料直通"
-              subtitle="前端呼叫我方 /api/proxy/posts；伺服器轉送 JSONPlaceholder，並將結果回傳。"
+              title="Proxy Route Handler (BFF)：包裝外部呼叫"
+              subtitle="客端只呼叫 /api/proxy/posts；伺服器轉送到 JSONPlaceholder 並清理回傳資料。"
               bullets={[
-                "✅ 優點：集中管理外部 API、可加 header/token、隔離 CORS。",
-                "⚠️ 風險：如果只是『原樣轉送』，資料契約不明確、容易把不該回傳的欄位暴露。",
-                "✅ 建議：Proxy 只當 transport；資料收斂要用 DTO / mapping。",
+                "閘道：可附加 headers/token，集中處理 CORS。",
+                "降低風險：隱藏外部 API 結構與敏感值。",
+                "建議：Proxy 只負責傳輸，形狀交給 DTO／映射。",
               ]}
-              routeExample="/middleware?tab=proxy"
+              routeExample="/proxy?tab=proxy"
             >
               <Suspense
                 fallback={
@@ -98,14 +104,14 @@ async function MiddlewareContent({
             </DemoShell>
           ) : (
             <DemoShell
-              title="DAL + DTO — 更安全的資料契約與欄位收斂"
-              subtitle="DAL 統一存取；DTO 定義輸出欄位白名單，避免外部資料污染 UI。"
+              title="DAL + DTO：可控的資料契約"
+              subtitle="DAL 管理外部 API 存取；DTO 定義 UI 能拿到的資料形狀。"
               bullets={[
-                "✅ DTO：定義『我只回傳哪些欄位』，提升安全與穩定性。",
-                "✅ DAL：集中 data-fetching，便於測試、快取策略與錯誤處理。",
-                "✅ UI：永遠依賴 DTO 格式，不直接依賴外部 API 原始 payload。",
+                "DTO 決定哪些欄位能輸出，提升安全與穩定。",
+                "DAL 集中資料抓取，方便快取、重試與錯誤處理。",
+                "UI 永遠依賴 DTO 輸出，不直接碰外部原始資料。",
               ]}
-              routeExample="/middleware?tab=dal-dto"
+              routeExample="/proxy?tab=dal-dto"
             >
               <DalDtoDemo />
             </DemoShell>

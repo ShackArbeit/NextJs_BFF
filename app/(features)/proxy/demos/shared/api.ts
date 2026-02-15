@@ -15,7 +15,6 @@ export async function fetchJson<T>(
       "Content-Type": "application/json",
       ...(init?.headers ?? {}),
     },
-    // demo 用，避免快取造成看不到變化
     cache: "no-store",
   });
 
