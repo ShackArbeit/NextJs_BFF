@@ -1,4 +1,4 @@
-export default function HomePage() {
+﻿export default function HomePage() {
   return (
     <section className="px-10 py-10">
       <div className="max-w-5xl">
@@ -7,20 +7,14 @@ export default function HomePage() {
         </h2>
 
         <p className="mt-4 text-zinc-400 leading-relaxed">
-            以下為{'   '}
-          <span className="text-zinc-200 font-medium">Next.js 16 App Router</span>{' '}
-          各功能的實作演示。
+          Built with Next.js 16 App Router to demonstrate BFF-style patterns, data fetching, streaming, and routing.
         </p>
         <div className="mt-8 rounded-lg border border-zinc-800 bg-zinc-900 p-6">
           <h3 className="text-lg font-semibold text-white">
-              簡介
+            Overview
           </h3>
           <p className="mt-2 text-sm text-zinc-400 leading-relaxed">
-            在此專案中，Next.js 被刻意定位為{' '}
-            <span className="text-zinc-200 font-medium">
-              BFF (Backend for Frontend)
-            </span>
-            。雖然 Next.js 同時支援 Node.js 與 Edge 運行環境，但在大型系統架構中，仍應依賴獨立的後端服務。
+            This lab treats Next.js as a Backend-for-Frontend: server components, server actions, and route handlers sit in front of external APIs to shield the UI and shape data safely.
           </p>
         </div>
         <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -46,30 +40,30 @@ export default function HomePage() {
 const FEATURES = [
   {
     title: 'Server Actions',
-    description: '比較表單動作（Form Actions）與傳統用戶端 fetch 的差異。',
+    description: 'Compare form actions to traditional fetch calls and how state flows on the server.',
   },
   {
     title: 'Data Fetching & Caching',
-    description: '展示 fetch 快取、重新驗證（Revalidation）以及資料即時性機制。',
+    description: 'Show how fetch caching and revalidation affect freshness and responsiveness.',
   },
   {
     title: 'Streaming & Suspense',
-    description: '透過動態 HTML 串流（Streaming）呈現部分渲染效果。',
+    description: 'Render partial HTML with streaming boundaries and understand Suspense fallbacks.',
   },
   {
     title: 'React Server Components',
-    description: '說明 RSC 邊界劃分以及渲染責任的分工。',
+    description: 'Explain what runs on the server vs. client and how they compose together.',
   },
   {
     title: 'Route Handlers',
-    description: '在 App Router 中實作 REST 風格的 API 介面。',
+    description: 'Implement REST-style APIs inside the App Router with typed handlers.',
   },
   {
     title: 'Advanced Routing',
-    description: '包含巢狀佈局（Nested Layouts）、路由分組及多樣的路由模式。',
+    description: 'Explore nested layouts, intercepting routes, and parallel routes.',
   },
   {
     title: 'Proxy',
-    description: 'DAL+ DTO 讓抓取外部資料更安全',
+    description: 'Use DAL + DTO to proxy external APIs and keep the UI contract safe.',
   },
 ]

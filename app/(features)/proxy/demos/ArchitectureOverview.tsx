@@ -1,21 +1,20 @@
-export default function ArchitectureOverview() {
+﻿export default function ArchitectureOverview() {
   return (
     <div className="space-y-6">
       <header className="flex flex-col gap-2">
         <h2 className="text-2xl font-semibold text-white">
-          架構：Next.js 作為 BFF
+          Overview: Next.js as BFF
         </h2>
         <p className="text-sm text-zinc-400 leading-relaxed">
-          以 Next.js App Router 扮演 BFF（Backend for Frontend）：負責 UI
-          渲染與編排，同時在後端層統一保護、聚合上游服務。
+          Using Next.js App Router as a Backend-for-Frontend to own UI rendering and sit in front of external APIs. The BFF isolates clients from schema changes and adds caching, auth, and shaping.
         </p>
       </header>
 
       <section className="rounded-xl border border-zinc-800 bg-zinc-950 p-6">
         <div className="flex items-center justify-between gap-4">
-          <h3 className="text-sm font-semibold text-white">系統總覽</h3>
+          <h3 className="text-sm font-semibold text-white">System picture</h3>
           <span className="text-xs text-zinc-400">
-            Next.js（BFF）+ DAL + DTO + 外部 API（JSONPlaceholder）
+            Next.js (BFF) + DAL + DTO + external API (JSONPlaceholder)
           </span>
         </div>
 
@@ -53,32 +52,32 @@ export default function ArchitectureOverview() {
 
       <section className="grid grid-cols-1 gap-4 lg:grid-cols-3">
         <Card
-          title="1) Next.js 作為 BFF"
-          badge="角色定位"
+          title="1) Next.js as BFF"
+          badge="Role"
           items={[
-            "用 App Router 來編排 UI、聚合資料。",
-            "Server Actions 與 Route Handlers 是主要 BFF 端點。",
-            "外部 API（如 JSONPlaceholder）被 BFF 隔離在後端。",
+            "App Router renders UI while BFF shields the client from external APIs.",
+            "Server Actions and Route Handlers are the main BFF surfaces.",
+            "External APIs (ex: JSONPlaceholder) stay behind the BFF boundary.",
           ]}
         />
 
         <Card
-          title="2) DAL + DTO 串在中間"
-          badge="資料流向"
+          title="2) DAL + DTO in the middle"
+          badge="Data flow"
           items={[
-            "UI 不直接呼叫外部 API，全都經過 DAL。",
-            "DAL 管理快取、重試、錯誤與安全 header。",
-            "DTO 決定哪些欄位能出站、UI 最終看到的形狀。",
+            "UI never calls external APIs directly; everything goes through the DAL.",
+            "DAL owns retries, errors, headers, and caching.",
+            "DTO decides which fields go out; UI consumes the stable DTO shape.",
           ]}
         />
 
         <Card
-          title="3) 精簡的中介層設計"
-          badge="設計指引"
+          title="3) Simplify the middle layer"
+          badge="Design"
           items={[
-            "Middleware 處理認證、語系等橫切關注。",
-            "業務邏輯集中在 Actions / DAL，不散在 UI。",
-            "保持組件純粹，與外部 schema 解耦以利測試。",
+            "Middleware can add auth or tracing before hitting Actions / DAL.",
+            "Business logic sits in Actions or the DAL instead of UI components.",
+            "Keep components clean; test external schema changes at the boundary.",
           ]}
         />
       </section>

@@ -1,23 +1,23 @@
-import Link from "next/link";
+﻿import Link from "next/link";
 
-export type TabKey = "Whole Structure" | "proxy" | "dal-dto";
+export type TabKey = "structure" | "proxy" | "dal-dto";
 
 export default function TabNav({ activeTab }: { activeTab: TabKey }) {
   const tabs: Array<{ key: TabKey; label: string; desc: string }> = [
     {
-      key: "Whole Structure",
-      label: "架構概覽",
-      desc: "先點擊了解基本概念",
+      key: "structure",
+      label: "Architecture overview",
+      desc: "Quick look at how BFF + DAL/DTO fit together.",
     },
     {
       key: "proxy",
-      label: "Proxy 路由處理",
-      desc: "BFF 作為外部 API 閘道",
+      label: "Proxy route handler",
+      desc: "Use Next.js as BFF to forward external API calls.",
     },
     {
       key: "dal-dto",
       label: "DAL + DTO",
-      desc: "資料存取與轉換定義",
+      desc: "Store raw data centrally and expose UI-friendly shapes.",
     },
   ];
 

@@ -1,4 +1,4 @@
-import { dalGetPostsDTO, dalGetPostsRaw } from "./shared/dal";
+﻿import { dalGetPostsDTO, dalGetPostsRaw } from "./shared/dal";
 import { PostDTO } from "./shared/dto";
 
 export default async function DalDtoDemo() {
@@ -7,12 +7,12 @@ export default async function DalDtoDemo() {
   return (
     <div className="space-y-6">
       <div className="rounded-xl border border-zinc-800 bg-zinc-950 p-4">
-        <div className="text-sm font-semibold text-zinc-200">資料對照</div>
+        <div className="text-sm font-semibold text-zinc-200">Data comparison</div>
         <div className="mt-2 grid gap-3 md:grid-cols-2">
           <div className="rounded-xl border border-zinc-800 bg-zinc-900 p-4">
-            <div className="text-sm font-semibold">原始資料（外部欄位）</div>
+            <div className="text-sm font-semibold">Raw data (external)</div>
             <p className="mt-2 text-sm text-zinc-300">
-              包含 <code>userId</code>、<code>body</code> 等 UI 不一定需要的欄位。
+              Contains fields like <code>userId</code> and <code>body</code> that the UI may not need directly.
             </p>
             <pre className="mt-3 overflow-auto rounded-lg bg-zinc-950 p-3 text-xs text-zinc-200">
 {JSON.stringify(raw[0], null, 2)}
@@ -20,9 +20,9 @@ export default async function DalDtoDemo() {
           </div>
 
           <div className="rounded-xl border border-zinc-800 bg-zinc-900 p-4">
-            <div className="text-sm font-semibold">PostDTO（輸出給 UI 的定義）</div>
+            <div className="text-sm font-semibold">PostDTO (UI-friendly shape)</div>
             <p className="mt-2 text-sm text-zinc-300">
-              只暴露 UI 需要的 <code>{`{ id, title, summary }`}</code>。
+              Only expose the fields UI needs, e.g. <code>{`{ id, title, summary }`}</code>.
             </p>
             <pre className="mt-3 overflow-auto rounded-lg bg-zinc-950 p-3 text-xs text-zinc-200">
 {JSON.stringify(dtos[0], null, 2)}
@@ -38,8 +38,7 @@ export default async function DalDtoDemo() {
       </div>
 
       <div className="rounded-xl border border-zinc-800 bg-zinc-950 p-4 text-sm text-zinc-300">
-        提醒：UI 只依賴 DTO（固定格式），即使外部 API 欄位調整，也只需要更新 DAL/DTO
-        mapping，不用讓 UI 跟著改。
+        Note: the UI depends on DTOs (stable format), so even if the external API changes fields, you only need to adjust DAL/DTO mapping and keep UI untouched.
       </div>
     </div>
   );
@@ -49,7 +48,7 @@ function PostCard({ post }: { post: PostDTO }) {
   return (
     <div className="rounded-2xl border border-zinc-800 bg-zinc-950 p-5">
       <div className="flex items-center justify-between gap-3">
-        <div className="text-sm text-zinc-400">DTO 安全輸出</div>
+        <div className="text-sm text-zinc-400">DTO sent to UI</div>
         <span className="rounded-full bg-emerald-500/20 px-3 py-1 text-xs text-emerald-200">
           id={post.id}
         </span>
@@ -59,7 +58,7 @@ function PostCard({ post }: { post: PostDTO }) {
       <p className="mt-2 text-sm text-zinc-300">{post.summary}</p>
 
       <div className="mt-4 text-xs text-zinc-400">
-        原始 body 沒有直接送到 UI，而是由 DTO 轉成 summary。
+        Raw <code>body</code> never reaches the UI; it was transformed into <code>summary</code> by the DTO.
       </div>
     </div>
   );

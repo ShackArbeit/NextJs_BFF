@@ -1,4 +1,4 @@
-import Link from "next/link";
+﻿import Link from "next/link";
 import { Suspense } from "react";
 import TabNav, { TabKey } from "./components/TabNav";
 import DemoShell from "./components/DemoShell";
@@ -9,7 +9,7 @@ import ArchitectureOverview from "./demos/ArchitectureOverview";
 function normalizeTab(v: unknown): TabKey {
   if (v === "proxy") return "proxy";
   if (v === "dal-dto") return "dal-dto";
-  return "Whole Structure";
+  return "structure";
 }
 
 export default function ProxyFeaturePage({
@@ -21,7 +21,7 @@ export default function ProxyFeaturePage({
     <Suspense
       fallback={
         <div className="px-6 py-10 text-zinc-300">
-          載入 Proxy / DAL+DTO 示範中...
+          Loading Proxy / DAL + DTO demos...
         </div>
       }
     >
@@ -45,14 +45,17 @@ async function ProxyContent({
           <div className="flex items-center justify-between gap-4">
             <div>
               <h1 className="text-3xl font-bold tracking-tight">
-                Proxy / DAL+DTO 示範
+                Proxy / DAL + DTO demos
               </h1>
+              <p className="mt-2 text-zinc-400 text-sm">
+                Show how a BFF layer proxies external APIs and shapes data for the UI.
+              </p>
             </div>
             <Link
               href="/"
               className="rounded-xl border border-zinc-800 bg-zinc-900 px-4 py-2 text-sm text-zinc-200 hover:bg-zinc-800"
             >
-              返回首頁
+              Back to home
             </Link>
           </div>
 
@@ -60,19 +63,19 @@ async function ProxyContent({
         </header>
 
         <main className="mt-8">
-          {activeTab === "Whole Structure" ? (
+          {activeTab === "structure" ? (
             <section className="space-y-6">
               <ArchitectureOverview />
             </section>
           ) : activeTab === "proxy" ? (
             <DemoShell
-              title="Proxy Route Handler (BFF)：包裝外部呼叫"
-              subtitle="客端只呼叫 /api/proxy/posts；伺服器轉送到 JSONPlaceholder 並清理回傳資料。"
-              bullets={[
-                "閘道：可附加 headers/token，集中處理 CORS。",
-                "降低風險：隱藏外部 API 結構與敏感值。",
-                "建議：Proxy 只負責傳輸，形狀交給 DTO／映射。",
-              ]}
+              title="Proxy Route Handler (BFF): wrap external API calls"
+              subtitle="Client calls /api/proxy/posts; the server forwards to JSONPlaceholder and scrubs the response."
+              bullets=[
+                "Benefits: can inject headers/tokens, avoid CORS pain, and centralize error handling.",
+                "Keeps external schemas hidden so UI does not depend on raw payloads.",
+                "Recommendation: proxy requests, then map to DTOs before sending to components.",
+              ]
               routeExample="/proxy?tab=proxy"
             >
               <Suspense
@@ -104,13 +107,13 @@ async function ProxyContent({
             </DemoShell>
           ) : (
             <DemoShell
-              title="DAL + DTO：可控的資料契約"
-              subtitle="DAL 管理外部 API 存取；DTO 定義 UI 能拿到的資料形狀。"
-              bullets={[
-                "DTO 決定哪些欄位能輸出，提升安全與穩定。",
-                "DAL 集中資料抓取，方便快取、重試與錯誤處理。",
-                "UI 永遠依賴 DTO 輸出，不直接碰外部原始資料。",
-              ]}
+              title="DAL + DTO: keep UI contracts stable"
+              subtitle="DAL owns external API calls; DTO defines the shape the UI consumes."
+              bullets=[
+                "DTO limits which fields are exposed and keeps the UI safe.",
+                "DAL centralizes fetch logic, retries, headers, and errors.",
+                "UI only depends on DTO output, so backend schema changes stay isolated.",
+              ]
               routeExample="/proxy?tab=dal-dto"
             >
               <DalDtoDemo />
