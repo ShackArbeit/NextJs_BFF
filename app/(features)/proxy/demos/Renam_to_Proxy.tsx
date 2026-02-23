@@ -44,15 +44,15 @@ export default async function ProxyDemo() {
         <div className="flex items-center gap-2 mb-4">
           <span className="flex h-2 w-2 rounded-full bg-blue-500 animate-pulse" />
           <h2 className="text-sm font-bold tracking-widest uppercase text-zinc-400">
-            Flow: Proxy pattern
+            流程：Proxy 模式
           </h2>
         </div>
 
         <ol className="relative grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
           {[
-            { step: "01", title: "Client / Server Component", desc: "Client or RSC calls /api/proxy/posts." },
-            { step: "02", title: "Route Handler forwards", desc: "Route handler sends the request to the external API." },
-            { step: "03", title: "Sanitized response", desc: "UI receives scrubbed JSON and renders it." },
+            { step: "01", title: "用戶端／伺服器元件", desc: "Client 或 RSC 呼叫 /api/proxy/posts。" },
+            { step: "02", title: "Route Handler 轉送", desc: "Route handler 將請求轉送到外部 API。" },
+            { step: "03", title: "清理後回應", desc: "UI 取得清理後 JSON 並渲染。" },
           ].map((item, i) => (
             <li key={i} className="flex flex-col border-l border-zinc-800 pl-4 py-1">
               <span className="text-blue-500 font-mono font-bold">{item.step}</span>
@@ -72,7 +72,7 @@ export default async function ProxyDemo() {
             <div>
               <div className="flex items-start justify-between">
                 <div className="inline-flex items-center rounded-md bg-zinc-800 px-2 py-1 text-[10px] font-medium text-zinc-400 ring-1 ring-inset ring-zinc-700/50">
-                  RAW_DATA_IN
+                  原始資料輸入
                 </div>
                 <div className="flex gap-1">
                   <span className="rounded bg-blue-500/10 px-1.5 py-0.5 text-[10px] font-medium text-blue-400">ID: {p.id}</span>
@@ -94,7 +94,7 @@ export default async function ProxyDemo() {
                 <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                 </svg>
-                <span>Note: avoid leaking external-only fields (like userId) directly to UI.</span>
+                <span>註：避免把外部專用欄位（如 userId）直接曝露給 UI。</span>
               </div>
             </div>
           </article>

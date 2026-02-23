@@ -6,18 +6,18 @@ export default function TabNav({ activeTab }: { activeTab: TabKey }) {
   const tabs: Array<{ key: TabKey; label: string; desc: string }> = [
     {
       key: "structure",
-      label: "Architecture overview",
-      desc: "Quick look at how BFF + DAL/DTO fit together.",
+      label: "架構概覽",
+      desc: "快速了解 BFF + DAL/DTO 如何搭配。",
     },
     {
       key: "proxy",
-      label: "Proxy route handler",
-      desc: "Use Next.js as BFF to forward external API calls.",
+      label: "Proxy 路由處理器",
+      desc: "用 Next.js 作為 BFF 轉送外部 API 呼叫。",
     },
     {
       key: "dal-dto",
       label: "DAL + DTO",
-      desc: "Store raw data centrally and expose UI-friendly shapes.",
+      desc: "集中保存原始資料並輸出 UI 友善的格式。",
     },
   ];
 

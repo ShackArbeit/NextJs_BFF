@@ -21,7 +21,7 @@ export default function ProxyFeaturePage({
     <Suspense
       fallback={
         <div className="px-6 py-10 text-zinc-300">
-          Loading Proxy / DAL + DTO demos...
+          正在載入 Proxy / DAL + DTO 範例...
         </div>
       }
     >
@@ -45,17 +45,17 @@ async function ProxyContent({
           <div className="flex items-center justify-between gap-4">
             <div>
               <h1 className="text-3xl font-bold tracking-tight">
-                Proxy / DAL + DTO demos
+                Proxy / DAL + DTO 範例
               </h1>
               <p className="mt-2 text-zinc-400 text-sm">
-                Show how a BFF layer proxies external APIs and shapes data for the UI.
+                說明 BFF 層如何代理外部 API 並為 UI 整理資料。
               </p>
             </div>
             <Link
               href="/"
               className="rounded-xl border border-zinc-800 bg-zinc-900 px-4 py-2 text-sm text-zinc-200 hover:bg-zinc-800"
             >
-              Back to home
+              回首頁
             </Link>
           </div>
 
@@ -69,12 +69,12 @@ async function ProxyContent({
             </section>
           ) : activeTab === "proxy" ? (
             <DemoShell
-              title="Proxy Route Handler (BFF): wrap external API calls"
-              subtitle="Client calls /api/proxy/posts; the server forwards to JSONPlaceholder and scrubs the response."
+              title="Proxy 路由處理器（BFF）：封裝外部 API 呼叫"
+              subtitle="Client 呼叫 /api/proxy/posts；伺服器轉送到 JSONPlaceholder 並清理回應。"
               bullets={[
-                "Benefits: can inject headers/tokens, avoid CORS pain, and centralize error handling.",
-                "Keeps external schemas hidden so UI does not depend on raw payloads.",
-                "Recommendation: proxy requests, then map to DTOs before sending to components.",
+                "優點：可注入 headers/token、避免 CORS 問題、集中錯誤處理。",
+                "隱藏外部 schema，UI 不依賴原始 payload。",
+                "建議：先做 proxy，再映射為 DTO 再送給元件。",
               ]}
               routeExample="/proxy?tab=proxy"
             >
@@ -107,12 +107,12 @@ async function ProxyContent({
             </DemoShell>
           ) : (
             <DemoShell
-              title="DAL + DTO: keep UI contracts stable"
-              subtitle="DAL owns external API calls; DTO defines the shape the UI consumes."
+              title="DAL + DTO：維持 UI 契約穩定"
+              subtitle="DAL 負責外部 API 呼叫；DTO 定義 UI 需要的資料形狀。"
               bullets={[
-                "DTO limits which fields are exposed and keeps the UI safe.",
-                "DAL centralizes fetch logic, retries, headers, and errors.",
-                "UI only depends on DTO output, so backend schema changes stay isolated.",
+                "DTO 限制對外欄位，讓 UI 更安全。",
+                "DAL 集中 fetch 邏輯、重試、headers 與錯誤處理。",
+                "UI 只依賴 DTO 輸出，後端 schema 變動也能隔離。",
               ]}
               routeExample="/proxy?tab=dal-dto"
             >

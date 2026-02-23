@@ -1,6 +1,6 @@
 # Middleware 示範（Next.js App Router）
 
-## 概要
+## 概述
 此示範以「單一頁面 + 查詢參數 tab」呈現兩種 BFF／資料治理策略的差異。
 
 1) Proxy / BFF Route Handler（`tab=proxy`）
@@ -15,7 +15,7 @@
   - 穩定：外部欄位若有變化，調整 DAL/DTO mapping 即可，不需前端同步改動。
   - 易測：DTO mapping／guard 方便寫單元測試。
 
-> 註：這裡的 “middleware” 是 BFF 流程示範，非 Next.js `middleware.ts`。在 App Router 中，更常用 Route Handlers（`app/api/**/route.ts`）與 Server Actions/Server Components 來放置 BFF/轉接邏輯。
+> 註：這裡的「middleware」是 BFF 流程示範，非 Next.js `middleware.ts`。在 App Router 中，更常用 Route Handlers（`app/api/**/route.ts`）與 Server Actions/Server Components 來放置 BFF/轉接邏輯。
 
 ---
 
