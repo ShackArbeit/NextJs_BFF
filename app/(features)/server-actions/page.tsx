@@ -37,11 +37,10 @@ export default async function Page({ searchParams }: PageProps) {
     <div className="mx-auto max-w-6xl px-8 py-10 space-y-8">
       <header className="rounded-2xl border border-white/10 bg-gradient-to-br from-emerald-500/10 via-sky-500/5 to-violet-500/10 p-8 shadow-lg shadow-black/30">
         <p className="text-xs uppercase tracking-[0.25em] text-zinc-400">Feature</p>
-        <h1 className="mt-2 text-3xl font-semibold text-white">Server Actions Demo</h1>
+        <h1 className="mt-2 text-3xl font-semibold text-white">Server Actions 示範</h1>
         <p className="mt-2 max-w-3xl text-sm text-zinc-300">
-          Two focused demos: a server component that uses server actions with useActionState for
-          pending feedback, and a client component that calls the same action via props and wraps
-          submission in useTransition to keep the UI responsive.
+          兩個重點示範：伺服器元件搭配 useActionState 顯示待處理回饋，以及用戶端元件
+          透過 props 呼叫同一個 action，並以 useTransition 包住提交以維持 UI 回應。
         </p>
       </header>
 
