@@ -1,3 +1,5 @@
+import { cookies, headers } from "next/headers";
+
 type ExternalPost = {
   userId: number;
   id: number;
@@ -5,8 +7,23 @@ type ExternalPost = {
   body: string;
 };
 
+async function getBaseUrl(): Promise<string> {
+  const h = await headers();
+  const proto = h.get("x-forwarded-proto") ?? "http";
+  const host = h.get("x-forwarded-host") ?? h.get("host") ?? "localhost:3000";
+  return `${proto}://${host}`;
+}
+
 async function getProxyPosts(): Promise<ExternalPost[]> {
-  const res = await fetch("/api/proxy/posts", { cache: "no-store" });
+  const baseUrl = await getBaseUrl();
+  const cookieStore = await cookies();
+  const url = new URL("/api/proxy/posts", baseUrl).toString();
+  const res = await fetch(url, {
+    cache: "no-store",
+    headers: {
+      cookie: cookieStore.toString(),
+    },
+  });
 
   if (!res.ok) {
     const text = await res.text().catch(() => "");
