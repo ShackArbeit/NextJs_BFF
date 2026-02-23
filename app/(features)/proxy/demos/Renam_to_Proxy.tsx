@@ -1,5 +1,3 @@
-import { headers } from "next/headers";
-
 type ExternalPost = {
   userId: number;
   id: number;
@@ -7,22 +5,8 @@ type ExternalPost = {
   body: string;
 };
 
-async function getBaseUrl(): Promise<string> {
-  const envBaseUrl = process.env.NEXT_PUBLIC_BASE_URL;
-  if (envBaseUrl) return envBaseUrl;
-
-  const vercelUrl = process.env.VERCEL_URL;
-  if (vercelUrl) return `https://${vercelUrl}`;
-
-  const h = await headers();
-  const proto = h.get("x-forwarded-proto") ?? "http";
-  const host = h.get("x-forwarded-host") ?? h.get("host") ?? "localhost:3000";
-  return `${proto}://${host}`;
-}
-
 async function getProxyPosts(): Promise<ExternalPost[]> {
-  const baseUrl = await getBaseUrl();
-  const res = await fetch(`${baseUrl}/api/proxy/posts`, { cache: "no-store" });
+  const res = await fetch("/api/proxy/posts", { cache: "no-store" });
 
   if (!res.ok) {
     const text = await res.text().catch(() => "");
